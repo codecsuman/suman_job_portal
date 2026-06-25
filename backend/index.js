@@ -9,40 +9,69 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 
-// Load environment variables
-dotenv.config();
+// ===========================
+// Load Environment Variables
+// ===========================
+if (process.env.NODE_ENV === "production") {
+    dotenv.config({ path: ".env.production" });
+} else {
+    dotenv.config({ path: ".env.local" });
+}
 
-// Debugging
+// ===========================
+// Debug Environment Variables
+// ===========================
 console.log("==================================");
+console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("PORT:", process.env.PORT);
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 console.log("MONGO_URI:", process.env.MONGO_URI);
 console.log("==================================");
 
 const app = express();
 
+// ===========================
 // Middleware
+// ===========================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// ===========================
+// CORS Configuration
+// ===========================
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
 };
 
 app.use(cors(corsOptions));
 
-// Routes
+// ===========================
+// API Routes
+// ===========================
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-// Port
-const PORT = process.env.PORT || 3000;
+// ===========================
+// Start Server
+// ===========================
+const PORT = process.env.PORT || 8000;
 
-// Start server
-app.listen(PORT, async () => {
-    console.log(`Server running at port ${PORT}`);
-    await connectDB();
-});
+const startServer = async () => {
+    try {
+        await connectDB();
+        console.log("MongoDB Connected Successfully");
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error.message);
+        process.exit(1);
+    }
+};
+
+startServer();

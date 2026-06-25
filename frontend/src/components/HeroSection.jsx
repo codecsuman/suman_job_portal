@@ -1,41 +1,76 @@
-import React, { useState } from 'react'
-import { Button } from './ui/button'
-import { Search } from 'lucide-react'
-import { useDispatch } from 'react-redux';
-import { setSearchedQuery } from '@/redux/jobSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { Search } from "lucide-react";
+
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const HeroSection = () => {
     const [query, setQuery] = useState("");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const searchJobHandler = () => {
-        dispatch(setSearchedQuery(query));
+        const trimmedQuery = query.trim();
+
+        dispatch(setSearchedQuery(trimmedQuery));
         navigate("/browse");
-    }
+    };
 
     return (
-        <div className='text-center'>
-            <div className='flex flex-col gap-5 my-10'>
-                <span className=' mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>No. 1 Job Hunt Website</span>
-                <h1 className='text-5xl font-bold'>Search, Apply & <br /> Get Your <span className='text-[#6A38C2]'>Dream Jobs</span></h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid aspernatur temporibus nihil tempora dolor!</p>
-                <div className='flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
+        <section className="text-center py-10 px-4">
+            <div className="flex flex-col gap-6">
+
+                <span className="mx-auto rounded-full bg-blue-50 px-5 py-2 font-medium text-blue-600 border border-blue-100">
+                    🚀 No. 1 Job Portal
+                </span>
+
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+                    Find Your
+                    <span className="text-indigo-600">
+                        {" "}Dream Job
+                    </span>
+                    <br />
+                    Build Your Future Today
+                </h1>
+
+                <p className="mx-auto max-w-2xl text-gray-600">
+                    Search thousands of jobs from top companies,
+                    apply with one click, and take the next step
+                    in your career.
+                </p>
+
+                <div className="mx-auto flex w-full max-w-2xl items-center rounded-full border border-gray-200 bg-white pl-4 shadow-lg focus-within:border-blue-400 transition-colors">
+
                     <input
                         type="text"
-                        placeholder='Find your dream jobs'
+                        aria-label="Search Jobs"
+                        value={query}
+                        placeholder="Search by job title, company, or keyword..."
                         onChange={(e) => setQuery(e.target.value)}
-                        className='outline-none border-none w-full'
-
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                searchJobHandler();
+                            }
+                        }}
+                        className="h-12 w-full border-none bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     />
-                    <Button onClick={searchJobHandler} className="rounded-r-full bg-[#6A38C2]">
-                        <Search className='h-5 w-5' />
+
+                    <Button
+                        type="button"
+                        onClick={searchJobHandler}
+                        className="rounded-r-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-blue-600 transition-all duration-300"
+                    >
+                        <Search className="h-5 w-5" />
                     </Button>
+
                 </div>
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
-export default HeroSection
+export default HeroSection;

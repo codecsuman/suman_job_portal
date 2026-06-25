@@ -1,25 +1,44 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
 import { setAllAppliedJobs } from "@/redux/jobSlice";
 import { APPLICATION_API_END_POINT } from "@/utils/constant";
-import axios from "axios"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 
 const useGetAppliedJobs = () => {
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
+        let isMounted = true;
+
         const fetchAppliedJobs = async () => {
             try {
-                const res = await axios.get(`${APPLICATION_API_END_POINT}/get`, {withCredentials:true});
-                console.log(res.data);
-                if(res.data.success){
-                    dispatch(setAllAppliedJobs(res.data.application));
+                const res = await axios.get(
+                    APPLICATION_API_END_POINT,
+                    {
+                        withCredentials: true,
+                    }
+                );
+
+                if (isMounted && res.data.success) {
+                    dispatch(
+                        setAllAppliedJobs(res.data.applications)
+                    );
                 }
             } catch (error) {
-                console.log(error);
+                console.error(
+                    "Failed to fetch applied jobs:",
+                    error?.response?.data?.message || error.message
+                );
             }
-        }
+        };
+
         fetchAppliedJobs();
-    },[])
+
+        return () => {
+            isMounted = false;
+        };
+    }, [dispatch]);
 };
+
 export default useGetAppliedJobs;
