@@ -42,3 +42,26 @@ const upload = multer({
 // Export Middleware
 // ===========================
 export const singleUpload = upload.single("file");
+
+// 🔴 NEW: Error handler middleware
+export const handleUploadError = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        message: "File size too large. Maximum 5MB allowed.",
+        success: false,
+      });
+    }
+    return res.status(400).json({
+      message: err.message,
+      success: false,
+    });
+  }
+  if (err) {
+    return res.status(400).json({
+      message: err.message,
+      success: false,
+    });
+  }
+  next();
+};

@@ -30,11 +30,29 @@ export const register = async (req, res) => {
     let profilePhoto = "";
 
     if (req.file) {
-      const fileUri = getDataUri(req.file);
+      try {
+        const fileUri = getDataUri(req.file);
 
-      if (fileUri) {
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        if (!fileUri || !fileUri.content) {
+          return res.status(400).json({
+            message: "Failed to process image. Please try again.",
+            success: false,
+          });
+        }
+
+        const cloudResponse = await cloudinary.uploader.upload(
+          fileUri.content,
+          {
+            folder: "job-portal/profile-photos",
+            public_id: `user_${Date.now()}`,
+            overwrite: true,
+          },
+        );
+
         profilePhoto = cloudResponse.secure_url;
+      } catch (uploadError) {
+        console.error("Profile photo upload error:", uploadError);
+        profilePhoto = "";
       }
     }
 
@@ -166,7 +184,7 @@ export const logout = async (req, res) => {
 };
 
 // ===========================
-// Update Profile
+// Update Profile — FIXED ✅
 // ===========================
 export const updateProfile = async (req, res) => {
   try {
@@ -181,45 +199,102 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    if (fullname) user.fullname = fullname;
-    if (email) user.email = email;
-    if (phoneNumber) user.phoneNumber = phoneNumber;
-    if (bio) user.profile.bio = bio;
+    // Update text fields
+    if (fullname !== undefined) user.fullname = fullname.trim();
+    if (email !== undefined) user.email = email.trim().toLowerCase();
+    if (phoneNumber !== undefined) user.phoneNumber = phoneNumber.trim();
+    if (bio !== undefined) user.profile.bio = bio.trim();
 
-    if (skills) {
+    if (skills !== undefined) {
       user.profile.skills = skills
         .split(",")
         .map((skill) => skill.trim())
         .filter(Boolean);
     }
 
+    // 🔴 FIXED: Profile photo upload with proper error handling
     if (req.file) {
-      const fileUri = getDataUri(req.file);
+      console.log(
+        "📸 File received:",
+        req.file.originalname,
+        req.file.mimetype,
+        req.file.size,
+      );
 
-      if (fileUri) {
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      try {
+        const fileUri = getDataUri(req.file);
 
-        user.profile.resume = cloudResponse.secure_url;
-        user.profile.resumeOriginalName = req.file.originalname;
+        if (!fileUri || !fileUri.content) {
+          return res.status(400).json({
+            message:
+              "Failed to process image file. Please try a different image.",
+            success: false,
+          });
+        }
+
+        // Upload to Cloudinary with explicit folder
+        const cloudResponse = await cloudinary.uploader.upload(
+          fileUri.content,
+          {
+            folder: "job-portal/profile-photos",
+            public_id: `user_${user._id}_${Date.now()}`,
+            overwrite: true,
+            resource_type: "auto",
+          },
+        );
+
+        if (cloudResponse && cloudResponse.secure_url) {
+          // Delete old photo from Cloudinary if exists
+          if (user.profile.profilePhoto) {
+            try {
+              // Extract public_id from the old URL
+              const urlParts = user.profile.profilePhoto.split("/");
+              const filename = urlParts[urlParts.length - 1];
+              const publicId = `job-portal/profile-photos/${filename.split(".")[0]}`;
+              await cloudinary.uploader.destroy(publicId);
+              console.log("🗑️ Old photo deleted:", publicId);
+            } catch (deleteError) {
+              console.log("Old photo deletion skipped:", deleteError.message);
+            }
+          }
+
+          user.profile.profilePhoto = cloudResponse.secure_url;
+          console.log("✅ Profile photo uploaded:", cloudResponse.secure_url);
+        } else {
+          return res.status(500).json({
+            message: "Image upload failed. Please try again.",
+            success: false,
+          });
+        }
+      } catch (uploadError) {
+        console.error("❌ Cloudinary upload error:", uploadError);
+        return res.status(500).json({
+          message: "Failed to upload profile photo. Please try again.",
+          success: false,
+        });
       }
     }
 
+    // 🔴 FIXED: Await the save before responding
     await user.save();
+
+    // 🔴 FIXED: Fetch fresh user data from DB (without password)
+    const updatedUser = await User.findById(req.id).select("-password");
 
     return res.status(200).json({
       message: "Profile updated successfully.",
       user: {
-        _id: user._id,
-        fullname: user.fullname,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        role: user.role,
-        profile: user.profile,
+        _id: updatedUser._id,
+        fullname: updatedUser.fullname,
+        email: updatedUser.email,
+        phoneNumber: updatedUser.phoneNumber,
+        role: updatedUser.role,
+        profile: updatedUser.profile,
       },
       success: true,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Update Profile Error:", error);
 
     return res.status(500).json({
       message: "Internal Server Error",

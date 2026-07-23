@@ -17,7 +17,6 @@ export const registerCompany = async (req, res) => {
       });
     }
 
-    // 🔴 Case-insensitive duplicate check ("Acme" and "acme" now count as the same company)
     const existingCompany = await Company.findOne({
       name: { $regex: `^${companyName.trim()}$`, $options: "i" },
     });
@@ -103,7 +102,7 @@ export const getCompanyById = async (req, res) => {
 };
 
 // ===========================
-// Update Company
+// Update Company  —  FIXED
 // ===========================
 export const updateCompany = async (req, res) => {
   try {
@@ -118,32 +117,83 @@ export const updateCompany = async (req, res) => {
       });
     }
 
+    // Update text fields
     if (name) company.name = name.trim();
-    if (description) company.description = description.trim();
-    if (website) company.website = website.trim();
-    if (location) company.location = location.trim();
+    if (description !== undefined) company.description = description.trim();
+    if (website !== undefined) company.website = website.trim();
+    if (location !== undefined) company.location = location.trim();
 
+    // 🔴 FIXED: Enhanced logo upload with proper error handling
     if (req.file) {
-      const fileUri = getDataUri(req.file);
+      console.log(
+        "🏢 Company logo received:",
+        req.file.originalname,
+        req.file.mimetype,
+      );
 
-      if (fileUri?.content) {
+      try {
+        const fileUri = getDataUri(req.file);
+
+        if (!fileUri || !fileUri.content) {
+          return res.status(400).json({
+            success: false,
+            message:
+              "Failed to process logo image. Please try a different image.",
+          });
+        }
+
+        // 🔴 FIXED: Added folder and proper upload options
         const uploadedImage = await cloudinary.uploader.upload(
           fileUri.content,
           {
             folder: "job-portal/company-logo",
+            public_id: `company_${company._id}_${Date.now()}`,
+            overwrite: true,
+            resource_type: "auto",
           },
         );
 
-        company.logo = uploadedImage.secure_url;
+        if (uploadedImage && uploadedImage.secure_url) {
+          // Delete old logo from Cloudinary if exists
+          if (company.logo) {
+            try {
+              const oldPublicId = company.logo.split("/").pop().split(".")[0];
+              if (oldPublicId) {
+                await cloudinary.uploader.destroy(
+                  `job-portal/company-logo/${oldPublicId}`,
+                );
+              }
+            } catch (deleteError) {
+              console.log("Old logo deletion skipped:", deleteError.message);
+            }
+          }
+
+          company.logo = uploadedImage.secure_url;
+          console.log("✅ Company logo uploaded:", uploadedImage.secure_url);
+        } else {
+          return res.status(500).json({
+            success: false,
+            message: "Logo upload failed. Please try again.",
+          });
+        }
+      } catch (uploadError) {
+        console.error("❌ Cloudinary upload error:", uploadError);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to upload company logo. Please try again.",
+        });
       }
     }
 
     await company.save();
 
+    // 🔴 FIXED: Return fresh data from DB
+    const updatedCompany = await Company.findById(req.params.id);
+
     return res.status(200).json({
       success: true,
       message: "Company information updated successfully.",
-      company,
+      company: updatedCompany,
     });
   } catch (error) {
     console.error("Update Company Error:", error);
