@@ -39,6 +39,16 @@ const jobSchema = new mongoose.Schema(
       trim: true,
     },
 
+    // 🔴 NEW: lets students filter by "Industry" (Frontend Developer, DevOps
+    // Engineer, etc.) against something real instead of guessing from the
+    // title/description text.
+    category: {
+      type: String,
+      trim: true,
+      default: "",
+      index: true,
+    },
+
     jobType: {
       type: String,
       enum: [
@@ -88,5 +98,6 @@ const jobSchema = new mongoose.Schema(
 jobSchema.index({ title: "text", description: "text" });
 jobSchema.index({ company: 1 });
 jobSchema.index({ created_by: 1 });
+jobSchema.index({ location: 1 });
 
 export const Job = mongoose.model("Job", jobSchema);

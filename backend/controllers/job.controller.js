@@ -24,10 +24,6 @@ const normalizeJobType = (value) => {
   return map[value.trim().toLowerCase()] || value;
 };
 
-// ===========================
-// Notify every applicant of a job whenever it's meaningfully
-// changed or removed, so students aren't caught off guard.
-// ===========================
 const notifyApplicantsOfJob = async (jobId, { title, message }) => {
   const applications = await Application.find({ job: jobId }).select(
     "applicant",
@@ -60,6 +56,7 @@ export const postJob = async (req, res) => {
       requirements,
       salary,
       location,
+      category,
       jobType,
       experience,
       position,
@@ -95,6 +92,7 @@ export const postJob = async (req, res) => {
       salary: Number(salary),
       experienceLevel: Number(experience),
       location,
+      category: category || "",
       jobType: normalizeJobType(jobType),
       position: Number(position),
       company: companyId,
@@ -135,6 +133,7 @@ export const updateJob = async (req, res) => {
       requirements,
       salary,
       location,
+      category,
       jobType,
       experience,
       position,
@@ -166,6 +165,7 @@ export const updateJob = async (req, res) => {
     }
     if (salary) job.salary = Number(salary);
     if (location) job.location = location;
+    if (category !== undefined) job.category = category;
     if (jobType) job.jobType = normalizeJobType(jobType);
     if (experience) job.experienceLevel = Number(experience);
     if (position) job.position = Number(position);
@@ -174,7 +174,6 @@ export const updateJob = async (req, res) => {
 
     const updatedJob = await Job.findById(id).populate("company");
 
-    // 🔴 REAL-TIME: Emit update to all viewers of this job
     emitToJob(id, "jobUpdated", {
       job: updatedJob,
       message: "Job details updated",
@@ -185,7 +184,6 @@ export const updateJob = async (req, res) => {
       type: "updated",
     });
 
-    // 🔴 PERSISTED: let every applicant know the posting they applied to changed
     await notifyApplicantsOfJob(id, {
       title: "Job updated",
       message: `A job you applied to — "${updatedJob.title}" at ${updatedJob.company?.name} — was updated.`,
@@ -227,7 +225,6 @@ export const deleteJob = async (req, res) => {
       });
     }
 
-    // 🔴 PERSISTED: notify applicants BEFORE the job disappears (need the title)
     await notifyApplicantsOfJob(id, {
       title: "Job removed",
       message: `A job you applied to — "${job.title}" — has been taken down by the recruiter.`,
@@ -235,7 +232,6 @@ export const deleteJob = async (req, res) => {
 
     await Job.findByIdAndDelete(id);
 
-    // 🔴 REAL-TIME: Notify all viewers
     emitToJob(id, "jobDeleted", { jobId: id });
     broadcast("jobListUpdated", { jobId: id, type: "deleted" });
 
@@ -254,12 +250,20 @@ export const deleteJob = async (req, res) => {
 
 // ===========================
 // Get All Jobs
-// GET /api/v1/job/get?keyword=&jobType=&location=&salaryMin=&salaryMax=&page=1&limit=12
+// GET /api/v1/job/get?keyword=&jobType=&location=&category=&experienceMin=&experienceMax=&salaryMin=&salaryMax=&page=1&limit=12
 // ===========================
 export const getAllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
-    const { jobType, location, salaryMin, salaryMax } = req.query;
+    const {
+      jobType,
+      location,
+      category,
+      salaryMin,
+      salaryMax,
+      experienceMin,
+      experienceMax,
+    } = req.query;
 
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
     const limit = Math.min(
@@ -275,13 +279,27 @@ export const getAllJobs = async (req, res) => {
       ],
     };
 
+    // 🔴 exact match, since the frontend now sends one of the fixed
+    // enum values instead of free text
     if (jobType) query.jobType = jobType;
-    if (location) query.location = { $regex: location, $options: "i" };
+
+    // 🔴 exact-ish match against the location Select's fixed list
+    if (location) query.location = { $regex: `^${location}$`, $options: "i" };
+
+    // 🔴 NEW: industry/category filter
+    if (category) query.category = { $regex: `^${category}$`, $options: "i" };
 
     if (salaryMin || salaryMax) {
       query.salary = {};
       if (salaryMin) query.salary.$gte = Number(salaryMin);
       if (salaryMax) query.salary.$lte = Number(salaryMax);
+    }
+
+    // 🔴 NEW: experience range filter (in years)
+    if (experienceMin || experienceMax) {
+      query.experienceLevel = {};
+      if (experienceMin) query.experienceLevel.$gte = Number(experienceMin);
+      if (experienceMax) query.experienceLevel.$lte = Number(experienceMax);
     }
 
     const [jobs, total] = await Promise.all([
