@@ -3,15 +3,12 @@
 <br/>
 
 ```
-
-   ██╗ ██████╗ ██████╗     ██████╗  ██████╗ ██████╗ ████████╗ █████╗ ██╗
-   ██║██╔═══██╗██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║
-   ██║██║   ██║██████╔╝    ██████╔╝██║   ██║██████╔╝   ██║   ███████║██║
-   ██║██║   ██║██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║
-██╗██║╚██████╔╝██████╔╝    ██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║███████╗
-╚═╝╚═╝ ╚═════╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
-=======
-
+     ██╗ ██████╗ ██████╗     ██████╗  ██████╗ ██████╗ ████████╗ █████╗ ██╗     
+     ██║██╔═══██╗██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║     
+     ██║██║   ██║██████╔╝    ██████╔╝██║   ██║██████╔╝   ██║   ███████║██║     
+██   ██║██║   ██║██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║     
+╚█████╔╝╚██████╔╝██████╔╝    ██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║███████╗
+ ╚════╝  ╚═════╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
 ```
 
 ### *Where talent meets opportunity — built on the MERN Stack*
@@ -281,7 +278,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 **Suman Jhanp**
 
 *MERN Stack Developer | Full-Stack Enthusiast*
-<<<<<<< HEAD
 
 <br/>
 
@@ -292,18 +288,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 If this project helped you or sparked an idea — drop a ⭐ on the repo. It means a lot!
 
-=======
-
-<br/>
-
-[![GitHub](https://img.shields.io/badge/GitHub-codecsuman-1f2937?style=for-the-badge&logo=github)](https://github.com/codecsuman)
-[![Portfolio](https://img.shields.io/badge/Portfolio-sumanjhanp.netlify.app-f59e0b?style=for-the-badge&logo=netlify)](https://sumanjhanp.netlify.app)
-
-<br/>
-
-If this project helped you or sparked an idea — drop a ⭐ on the repo. It means a lot!
-
->>>>>>> 73d4d3268bebde422f1a5316f8f35b4a59057253
 **Made with ❤️ by [Suman Jhanp](https://sumanjhanp.netlify.app)**
 
 *Happy Coding 🚀*
