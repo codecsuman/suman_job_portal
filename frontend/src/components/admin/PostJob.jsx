@@ -22,16 +22,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 import { JOB_API_END_POINT } from "@/utils/constant";
-
-// 🔧 FIXED: exact enum values from backend/models/job.model.js — no more free-typed jobType
-const JOB_TYPE_OPTIONS = [
-  "Full-Time",
-  "Part-Time",
-  "Internship",
-  "Contract",
-  "Remote",
-  "Hybrid",
-];
+import { LOCATIONS, INDUSTRIES, JOB_TYPES } from "@/utils/filterOptions";
 
 const PostJob = () => {
   const navigate = useNavigate();
@@ -46,6 +37,7 @@ const PostJob = () => {
     requirements: "",
     salary: "",
     location: "",
+    category: "",
     jobType: "",
     experience: "",
     position: "",
@@ -59,9 +51,8 @@ const PostJob = () => {
     });
   };
 
-  const jobTypeChangeHandler = (value) => {
-    setInput({ ...input, jobType: value });
-  };
+  const setField = (key) => (value) =>
+    setInput((prev) => ({ ...prev, [key]: value }));
 
   const selectChangeHandler = (value) => {
     const selectedCompany = companies.find(
@@ -77,9 +68,10 @@ const PostJob = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (!input.jobType) {
-      return toast.error("Please select a job type.");
-    }
+    if (!input.jobType) return toast.error("Please select a job type.");
+    if (!input.location) return toast.error("Please select a location.");
+    if (!input.category)
+      return toast.error("Please select an industry/category.");
 
     try {
       setLoading(true);
@@ -169,7 +161,7 @@ const PostJob = () => {
             </div>
 
             <div>
-              <Label className="mb-2 block">Salary</Label>
+              <Label className="mb-2 block">Salary (LPA)</Label>
               <Input
                 required
                 type="number"
@@ -177,33 +169,63 @@ const PostJob = () => {
                 value={input.salary}
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
+                placeholder="e.g. 6 for ₹6 LPA"
               />
             </div>
 
+            {/* 🔧 FIXED: was a free-text Input — now the exact same list students filter by */}
             <div>
               <Label className="mb-2 block">Location</Label>
-              <Input
-                required
-                name="location"
+              <Select
+                onValueChange={setField("location")}
                 value={input.location}
-                onChange={changeEventHandler}
-                className="h-11 rounded-xl"
-              />
+              >
+                <SelectTrigger className="w-full h-11 rounded-xl">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {LOCATIONS.map((loc) => (
+                      <SelectItem key={loc} value={loc}>
+                        {loc}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* 🔧 FIXED: was a free-text Input, now a Select restricted to the schema's enum */}
+            {/* 🔧 NEW: Industry — didn't exist before at all */}
+            <div>
+              <Label className="mb-2 block">Industry / Role Category</Label>
+              <Select
+                onValueChange={setField("category")}
+                value={input.category}
+              >
+                <SelectTrigger className="w-full h-11 rounded-xl">
+                  <SelectValue placeholder="Select industry" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {INDUSTRIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div>
               <Label className="mb-2 block">Job Type</Label>
-              <Select
-                onValueChange={jobTypeChangeHandler}
-                value={input.jobType}
-              >
+              <Select onValueChange={setField("jobType")} value={input.jobType}>
                 <SelectTrigger className="w-full h-11 rounded-xl">
                   <SelectValue placeholder="Select job type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {JOB_TYPE_OPTIONS.map((type) => (
+                    {JOB_TYPES.map((type) => (
                       <SelectItem key={type} value={type}>
                         {type}
                       </SelectItem>

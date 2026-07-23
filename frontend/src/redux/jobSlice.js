@@ -1,15 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialJobFilters = {
+  location: "",
+  category: "",
+  jobType: "",
+  experienceLabel: "",
+  experienceMin: null,
+  experienceMax: null,
+  salaryLabel: "",
+  salaryMin: null,
+  salaryMax: null,
+};
+
 const initialState = {
   allJobs: [],
   allAdminJobs: [],
   singleJob: {},
   allAppliedJobs: [],
+
+  // Free-text keyword search (Hero search bar / CategoryCarousel quick-picks)
   searchJobByText: "",
   searchedQuery: "",
 
-  // 🔴 Notification center — backed by the real Notification model on the server.
-  // Shape per item: { _id, type, title, message, relatedJob, relatedApplication, isRead, createdAt }
+  // 🔴 NEW: structured filters from FilterCard.jsx — mirrors the exact
+  // query params the backend's getAllJobs now understands.
+  jobFilters: initialJobFilters,
+
   notifications: [],
   unreadCount: 0,
 };
@@ -114,16 +130,24 @@ const jobSlice = createSlice({
     },
 
     // ===========================
+    // 🔴 NEW: structured job filters
+    // ===========================
+    setJobFilter: (state, action) => {
+      const { key, value } = action.payload;
+      state.jobFilters[key] = value;
+    },
+    clearJobFilters: (state) => {
+      state.jobFilters = { ...initialJobFilters };
+    },
+
+    // ===========================
     // Notification center (server-persisted)
     // ===========================
-
-    // Bulk-load from GET /api/v1/notification on mount
     setNotifications: (state, action) => {
       state.notifications = action.payload.notifications || [];
       state.unreadCount = action.payload.unreadCount ?? 0;
     },
 
-    // A single live notification arrived over the socket ("notification" event)
     addNotification: (state, action) => {
       const notification = action.payload;
       const exists = state.notifications.find(
@@ -136,7 +160,6 @@ const jobSlice = createSlice({
       if (state.notifications.length > 30) state.notifications.pop();
     },
 
-    // Local-only mark-as-read (call the API separately, then dispatch this)
     markNotificationReadLocal: (state, action) => {
       const n = state.notifications.find((n) => n._id === action.payload);
       if (n && !n.isRead) {
@@ -186,6 +209,7 @@ const jobSlice = createSlice({
       state.allAppliedJobs = [];
       state.searchJobByText = "";
       state.searchedQuery = "";
+      state.jobFilters = { ...initialJobFilters };
       state.notifications = [];
       state.unreadCount = 0;
     },
@@ -207,6 +231,8 @@ export const {
   updateApplicationInterview,
   setSearchJobByText,
   setSearchedQuery,
+  setJobFilter,
+  clearJobFilters,
   setNotifications,
   addNotification,
   markNotificationReadLocal,

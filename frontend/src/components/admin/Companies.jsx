@@ -1,127 +1,117 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Plus, Building2, Search } from "lucide-react";
 
 import CompaniesTable from "./CompaniesTable";
 import useGetAllCompanies from "@/hooks/useGetAllCompanies";
 import { setSearchCompanyByText } from "@/redux/companySlice";
 
 const Companies = () => {
-    // ===========================
-    // Fetch Companies
-    // ===========================
-    useGetAllCompanies();
+  useGetAllCompanies();
 
-    const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    // ===========================
-    // Search Company
-    // ===========================
-    useEffect(() => {
-        dispatch(setSearchCompanyByText(input));
-    }, [input, dispatch]);
+  useEffect(() => {
+    dispatch(setSearchCompanyByText(input));
+  }, [input, dispatch]);
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-            <Navbar />
+  return (
+    <div
+      className="min-h-screen font-body"
+      style={{ background: "var(--paper)" }}
+    >
+      <Navbar />
 
-            <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div>
+            <span
+              className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-mono-ui text-[11px] tracking-widest uppercase mb-3"
+              style={{ borderColor: "var(--line)", color: "var(--ink-soft)" }}
+            >
+              <Building2 className="w-3 h-3" style={{ color: "var(--teal)" }} />
+              Recruiter Dashboard
+            </span>
+            <h1
+              className="font-display font-semibold text-3xl md:text-4xl tracking-tight"
+              style={{ color: "var(--ink)" }}
+            >
+              Your Companies
+            </h1>
+            <p
+              className="mt-2 text-sm md:text-base"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Manage every registered company profile and keep their details
+              fresh.
+            </p>
+          </div>
 
-                {/* Hero Section */}
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 shadow-2xl mb-10">
-
-                    <div className="absolute -top-24 -right-24 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-                    <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-
-                    <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 px-10 py-10">
-
-                        <div>
-                            <h1 className="text-4xl md:text-5xl font-extrabold text-white">
-                                Companies Dashboard
-                            </h1>
-
-                            <p className="mt-3 text-blue-100 text-lg">
-                                Manage all registered companies, update their
-                                details, and create new company profiles.
-                            </p>
-                        </div>
-
-                        <div className="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl px-8 py-5 shadow-xl">
-
-                            <h2 className="text-4xl font-bold text-white text-center">
-                                🏢
-                            </h2>
-
-                            <p className="text-blue-100 mt-2 text-center font-medium">
-                                Company Management
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/* Search Section */}
-                <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200 p-6 mb-8">
-
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-
-                        <div className="w-full md:w-[420px]">
-
-                            <Input
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                placeholder="🔍 Search company by name..."
-                                className="h-12 rounded-xl border-gray-300 focus:ring-2 focus:ring-blue-500"
-                            />
-
-                        </div>
-
-                        <Button
-                            onClick={() =>
-                                navigate("/admin/companies/create")
-                            }
-                            className="h-12 px-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-blue-600 text-white shadow-lg transition-all duration-300 hover:scale-105"
-                        >
-                            + New Company
-                        </Button>
-
-                    </div>
-
-                </div>
-
-                {/* Table Card */}
-                <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
-
-                    <div className="border-b bg-gradient-to-r from-gray-50 to-blue-50 px-8 py-6">
-
-                        <h2 className="text-2xl font-bold text-gray-800">
-                            Registered Companies
-                        </h2>
-
-                        <p className="text-gray-500 mt-1">
-                            Browse, edit and manage all companies from one
-                            dashboard.
-                        </p>
-
-                    </div>
-
-                    <div className="p-6">
-                        <CompaniesTable />
-                    </div>
-
-                </div>
-
-            </div>
+          <button
+            onClick={() => navigate("/admin/companies/create")}
+            className="h-12 px-6 rounded-full font-bold text-sm flex items-center gap-2 shrink-0 transition-transform hover:scale-[1.03] active:scale-95 shadow-[0_10px_24px_-8px_rgba(255,178,56,0.5)]"
+            style={{ background: "var(--marigold)", color: "var(--ink)" }}
+          >
+            <Plus className="w-4 h-4" />
+            New Company
+          </button>
         </div>
-    );
+
+        {/* Search */}
+        <div
+          className="rounded-2xl border bg-white p-4 mb-6 flex items-center gap-3"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <Search
+            className="w-4 h-4 shrink-0"
+            style={{ color: "var(--ink-soft)" }}
+          />
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Search company by name..."
+            className="h-9 border-none shadow-none focus-visible:ring-0 px-0 font-medium"
+            style={{ color: "var(--ink)" }}
+          />
+        </div>
+
+        {/* Table Card */}
+        <div
+          className="rounded-3xl border bg-white overflow-hidden shadow-[0_8px_30px_-12px_rgba(18,23,43,0.08)]"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <div
+            className="px-8 py-6 border-b"
+            style={{
+              borderColor: "var(--line)",
+              background: "var(--paper-dim)",
+            }}
+          >
+            <h2
+              className="font-display font-semibold text-xl"
+              style={{ color: "var(--ink)" }}
+            >
+              Registered Companies
+            </h2>
+            <p className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
+              Browse, edit, and manage all companies from one place.
+            </p>
+          </div>
+
+          <div className="p-6">
+            <CompaniesTable />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Companies;

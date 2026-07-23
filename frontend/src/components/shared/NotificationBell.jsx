@@ -152,7 +152,14 @@ const NotificationBell = () => {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
-                className="absolute -top-0.5 -right-0.5 flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-orange-500 px-1 text-[10px] font-bold text-white shadow-sm shadow-rose-500/30"
+                /*
+                  🔧 FIXED: this used to be `h-4.5` — NOT a real Tailwind
+                  utility (the default spacing scale has 4 then jumps to 5,
+                  there is no 4.5), so the class silently failed to generate
+                  any CSS and the badge collapsed to zero height. Using an
+                  explicit pixel size fixes it for good.
+                */
+                className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-orange-500 px-1 text-[10px] font-bold text-white shadow-sm shadow-rose-500/30 leading-none"
               >
                 {unreadCount > 9 ? "9+" : unreadCount}
               </motion.span>

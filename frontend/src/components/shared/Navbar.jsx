@@ -5,7 +5,6 @@ import axios from "axios";
 import { toast } from "sonner";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import NotificationBell from "./NotificationBell";
 
@@ -36,23 +35,35 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-white border-b border-slate-100 sticky top-0 z-40">
-      <div className="flex items-center justify-between max-w-7xl mx-auto px-6 h-16">
-        <Link
-          to="/"
-          className="text-2xl font-black tracking-tight text-slate-800"
-        >
-          Job<span className="text-blue-600">Portal</span>
+    <div className="sticky top-4 z-40 px-4 font-body">
+      <div
+        className="max-w-6xl mx-auto flex items-center justify-between h-16 px-3 sm:px-5 rounded-full border backdrop-blur-xl shadow-[0_10px_30px_-10px_rgba(18,23,43,0.18)]"
+        style={{
+          borderColor: "var(--line)",
+          background: "rgba(252,251,248,0.85)",
+        }}
+      >
+        <Link to="/" className="flex items-center gap-1.5 pl-2">
+          <span
+            className="font-display font-bold text-xl tracking-tight"
+            style={{ color: "var(--ink)" }}
+          >
+            Job<span style={{ color: "var(--marigold-deep)" }}>Folio</span>
+          </span>
         </Link>
 
-        <div className="flex items-center gap-8">
-          <ul className="hidden md:flex font-semibold text-sm items-center gap-6 text-slate-600">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <ul
+            className="hidden md:flex items-center gap-1 text-sm font-semibold"
+            style={{ color: "var(--ink-soft)" }}
+          >
             {user?.role === "recruiter" ? (
               <>
                 <li>
                   <Link
                     to="/admin/companies"
-                    className="hover:text-slate-900 transition-colors"
+                    className="px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors"
+                    style={{ color: "var(--ink-soft)" }}
                   >
                     Companies
                   </Link>
@@ -60,7 +71,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/admin/jobs"
-                    className="hover:text-slate-900 transition-colors"
+                    className="px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors"
                   >
                     Jobs
                   </Link>
@@ -71,7 +82,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/"
-                    className="hover:text-slate-900 transition-colors"
+                    className="px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors"
                   >
                     Home
                   </Link>
@@ -79,7 +90,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/jobs"
-                    className="hover:text-slate-900 transition-colors"
+                    className="px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors"
                   >
                     Jobs
                   </Link>
@@ -87,7 +98,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/browse"
-                    className="hover:text-slate-900 transition-colors"
+                    className="px-3.5 py-2 rounded-full hover:bg-black/5 transition-colors"
                   >
                     Browse
                   </Link>
@@ -99,52 +110,84 @@ const Navbar = () => {
           {!user ? (
             <div className="flex items-center gap-2">
               <Link to="/login">
-                <Button
-                  variant="outline"
-                  className="rounded-xl font-bold text-sm"
+                <button
+                  className="h-10 px-5 rounded-full font-bold text-sm border transition-colors"
+                  style={{ borderColor: "var(--ink)", color: "var(--ink)" }}
                 >
                   Login
-                </Button>
+                </button>
               </Link>
               <Link to="/signup">
-                <Button className="rounded-xl font-bold text-sm bg-slate-900 hover:bg-slate-800">
-                  Signup
-                </Button>
+                <button
+                  className="h-10 px-5 rounded-full font-bold text-sm transition-transform hover:scale-[1.03] active:scale-95"
+                  style={{ background: "var(--marigold)", color: "var(--ink)" }}
+                >
+                  Sign up
+                </button>
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
               <NotificationBell />
 
               <Popover>
                 <PopoverTrigger asChild>
-                  <Avatar className="cursor-pointer h-9 w-9 border border-slate-100">
-                    <AvatarImage
-                      src={user?.profile?.profilePhoto}
-                      alt={user?.fullname}
-                    />
-                    <AvatarFallback className="bg-blue-50 font-bold text-blue-600 text-sm">
-                      {user?.fullname?.charAt(0)?.toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <button className="p-1 rounded-full">
+                    <Avatar
+                      className="cursor-pointer h-9 w-9 border-2 transition-colors"
+                      style={{ borderColor: "var(--marigold)" }}
+                    >
+                      <AvatarImage
+                        src={user?.profile?.profilePhoto}
+                        alt={user?.fullname}
+                      />
+                      <AvatarFallback
+                        className="font-bold text-sm"
+                        style={{
+                          background: "var(--paper-dim)",
+                          color: "var(--ink)",
+                        }}
+                      >
+                        {user?.fullname?.charAt(0)?.toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
                 </PopoverTrigger>
 
-                <PopoverContent className="w-64 rounded-2xl p-4 shadow-xl border border-slate-100">
-                  <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+                <PopoverContent
+                  className="w-64 rounded-2xl p-4 shadow-xl border"
+                  style={{ borderColor: "var(--line)" }}
+                >
+                  <div
+                    className="flex items-center gap-3 pb-3 border-b"
+                    style={{ borderColor: "var(--line)" }}
+                  >
                     <Avatar className="h-10 w-10">
                       <AvatarImage
                         src={user?.profile?.profilePhoto}
                         alt={user?.fullname}
                       />
-                      <AvatarFallback className="bg-blue-50 font-bold text-blue-600">
+                      <AvatarFallback
+                        className="font-bold"
+                        style={{
+                          background: "var(--paper-dim)",
+                          color: "var(--ink)",
+                        }}
+                      >
                         {user?.fullname?.charAt(0)?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
-                      <p className="font-bold text-sm text-slate-800 truncate">
+                      <p
+                        className="font-bold text-sm truncate"
+                        style={{ color: "var(--ink)" }}
+                      >
                         {user?.fullname}
                       </p>
-                      <p className="text-xs font-medium text-slate-400 truncate capitalize">
+                      <p
+                        className="text-xs font-mono-ui uppercase tracking-wider truncate"
+                        style={{ color: "var(--teal)" }}
+                      >
                         {user?.role}
                       </p>
                     </div>
@@ -153,13 +196,14 @@ const Navbar = () => {
                   <div className="flex flex-col mt-2">
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:bg-slate-50 rounded-lg px-2 py-2 transition-colors"
+                      className="flex items-center gap-2 text-sm font-semibold rounded-lg px-2 py-2 hover:bg-black/5 transition-colors"
+                      style={{ color: "var(--ink-soft)" }}
                     >
                       <User2 className="w-4 h-4" /> View Profile
                     </Link>
                     <button
                       onClick={logoutHandler}
-                      className="flex items-center gap-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded-lg px-2 py-2 transition-colors text-left"
+                      className="flex items-center gap-2 text-sm font-semibold rounded-lg px-2 py-2 hover:bg-rose-50 text-rose-600 transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4" /> Logout
                     </button>

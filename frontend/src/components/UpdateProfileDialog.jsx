@@ -9,7 +9,8 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Loader2 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Loader2, Camera } from "lucide-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -23,6 +24,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   const { user } = useSelector((store) => store.auth);
 
   const [loading, setLoading] = useState(false);
+  // 🔧 NEW: live preview of the selected photo before it's ever uploaded
+  const [photoPreview, setPhotoPreview] = useState(null);
 
   const [input, setInput] = useState({
     fullname: "",
@@ -33,7 +36,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     file: null,
   });
 
-  // Sync form whenever user changes
   useEffect(() => {
     if (user) {
       setInput({
@@ -44,8 +46,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         skills: user.profile?.skills?.join(", ") || "",
         file: null,
       });
+      setPhotoPreview(null);
     }
-  }, [user]);
+  }, [user, open]);
+
+  // Clean up the blob URL when it's replaced or the dialog unmounts
+  useEffect(() => {
+    return () => {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+    };
+  }, [photoPreview]);
 
   const changeEventHandler = (e) => {
     setInput({
@@ -55,10 +65,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
   };
 
   const fileChangeHandler = (e) => {
-    setInput({
-      ...input,
-      file: e.target.files?.[0] || null,
-    });
+    const file = e.target.files?.[0] || null;
+    setInput({ ...input, file });
+
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoPreview(file ? URL.createObjectURL(file) : null);
   };
 
   const submitHandler = async (e) => {
@@ -86,7 +97,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (res.data.success) {
@@ -97,18 +108,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } catch (error) {
       console.log(error);
       toast.error(
-        error?.response?.data?.message ||
-          "Failed to update profile."
+        error?.response?.data?.message || "Failed to update profile.",
       );
     } finally {
       setLoading(false);
     }
   };
 
+  const displayedPhoto = photoPreview || user?.profile?.profilePhoto;
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[480px] rounded-3xl border border-slate-100 p-6 bg-white shadow-2xl gap-0">
-        
         <DialogHeader className="pb-4 border-b border-slate-100">
           <DialogTitle className="text-xl font-black text-slate-800 tracking-tight">
             Update Profile
@@ -117,10 +128,41 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
         <form onSubmit={submitHandler} className="mt-5">
           <div className="space-y-4 pb-6">
+            {/* 🔧 NEW: photo preview + click-to-upload avatar */}
+            <div className="flex flex-col items-center gap-3 pb-2">
+              <label htmlFor="file" className="relative cursor-pointer group">
+                <Avatar className="h-24 w-24 rounded-2xl border border-slate-100 shadow-inner">
+                  <AvatarImage
+                    src={displayedPhoto}
+                    alt={input.fullname}
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="rounded-2xl bg-indigo-50 font-black text-xl text-indigo-600">
+                    {input.fullname?.charAt(0)?.toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 flex items-center justify-center transition-colors">
+                  <Camera className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              </label>
+              <Input
+                id="file"
+                name="file"
+                type="file"
+                accept="image/*"
+                onChange={fileChangeHandler}
+                className="hidden"
+              />
+              <p className="text-xs font-semibold text-slate-400">
+                Click the photo to change it
+              </p>
+            </div>
 
-            {/* Name Field Row */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fullname" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Label
+                htmlFor="fullname"
+                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+              >
                 Name
               </Label>
               <Input
@@ -134,9 +176,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               />
             </div>
 
-            {/* Email Field Row */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Label
+                htmlFor="email"
+                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+              >
                 Email
               </Label>
               <Input
@@ -150,9 +194,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               />
             </div>
 
-            {/* Phone Field Row */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="phoneNumber" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Label
+                htmlFor="phoneNumber"
+                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+              >
                 Phone
               </Label>
               <Input
@@ -166,9 +212,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               />
             </div>
 
-            {/* Bio Field Row */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="bio" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Label
+                htmlFor="bio"
+                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+              >
                 Bio
               </Label>
               <Input
@@ -182,9 +230,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               />
             </div>
 
-            {/* Skills Field Row */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="skills" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <Label
+                htmlFor="skills"
+                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+              >
                 Skills
               </Label>
               <Input
@@ -195,21 +245,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 value={input.skills}
                 onChange={changeEventHandler}
                 className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
-              />
-            </div>
-
-            {/* File Upload Row */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="file" className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
-                Resume
-              </Label>
-              <Input
-                id="file"
-                name="file"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={fileChangeHandler}
-                className="col-span-3 rounded-xl border-slate-200 text-xs font-medium text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 transition-all file:cursor-pointer cursor-pointer"
               />
             </div>
           </div>
