@@ -3,12 +3,12 @@
 <br/>
 
 ```
- ██╗ ██████╗ ██████╗     ██████╗  ██████╗ ██████╗ ████████╗ █████╗ ██╗
- ██║██╔═══██╗██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║
- ██║██║   ██║██████╔╝    ██████╔╝██║   ██║██████╔╝   ██║   ███████║██║
-██╗██║██║   ██║██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║
-╚████╔╝╚██████╔╝██████╔╝    ██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║███████╗
- ╚═══╝  ╚═════╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
+   ██╗ ██████╗ ██████╗     ██████╗  ██████╗ ██████╗ ████████╗ █████╗ ██╗
+   ██║██╔═══██╗██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║
+   ██║██║   ██║██████╔╝    ██████╔╝██║   ██║██████╔╝   ██║   ███████║██║
+   ██║██║   ██║██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║
+██╗██║╚██████╔╝██████╔╝    ██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║███████╗
+╚═╝╚═╝ ╚═════╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
 ```
 
 ### *Where talent meets opportunity — built on the MERN Stack*
@@ -19,6 +19,7 @@
 [![Backend API](https://img.shields.io/badge/⚙️%20Backend%20API-Render-10b981?style=for-the-badge)](https://suman-job-portal.onrender.com)
 [![GitHub Repo](https://img.shields.io/badge/📂%20GitHub-Repository-1f2937?style=for-the-badge&logo=github)](https://github.com/codecsuman/suman_job_portal)
 [![Portfolio](https://img.shields.io/badge/👨‍💻%20Portfolio-sumanjhanp.netlify.app-f59e0b?style=for-the-badge)](https://sumanjhanp.netlify.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 <br/>
 
@@ -45,28 +46,30 @@
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
 - [Environment Variables](#-environment-variables)
-- [Deployment](#-deployment)
+- [Deployment](#️-deployment)
 - [Future Enhancements](#-future-enhancements)
+- [Contributing](#-contributing)
+- [License](#-license)
 - [Author](#-author)
 
 ---
 
 ## 🎯 About the Project
 
-**Job Portal** is a full-stack web application that bridges the gap between **job seekers** and **recruiters** on a unified platform. It provides a clean, modern interface for candidates to discover and apply for opportunities, while giving recruiters powerful tools to post jobs, manage listings, and review applicant profiles — all in real time.
+**Job Portal** is a full-stack web application that bridges the gap between **job seekers** and **recruiters** on a unified platform. It gives candidates a clean, modern interface to discover and apply for opportunities, while giving recruiters powerful tools to post jobs, manage listings, and review applicant profiles — all in real time.
 
-> Built as a portfolio project to demonstrate end-to-end MERN Stack development skills, including REST API design, JWT authentication, cloud media storage, and production deployment.
+> Built as a portfolio project to demonstrate end-to-end MERN Stack development: REST API design, JWT authentication, cloud media storage, and production deployment.
 
 <br/>
 
 <div align="center">
 
 | 👨‍💻 For Job Seekers | 🏢 For Recruiters |
-|:---:|:---:|
+|:---|:---|
 | Search & apply for jobs | Post & manage job listings |
-| Build your profile | Review all applicants |
+| Build a personal profile | Review all applicants |
 | Track application status | Create & manage companies |
-| Browse latest opportunities | Recruiter dashboard |
+| Browse the latest openings | Access a recruiter dashboard |
 
 </div>
 
@@ -75,30 +78,33 @@
 ## ✨ Features
 
 ### 👨‍💻 Job Seeker
+
 | Feature | Description |
 |---|---|
-| 🔐 **Secure Auth** | Registration & Login with JWT-protected sessions |
-| 👤 **Profile Management** | Create and update personal profile with photo upload |
+| 🔐 **Secure Auth** | Registration & login with JWT-protected sessions |
+| 👤 **Profile Management** | Create and update a personal profile with photo upload |
 | 🔍 **Smart Job Search** | Filter jobs by title, company, and location |
 | 📨 **Instant Apply** | One-click application submission |
-| 📋 **Application Tracker** | View all jobs you've applied to |
-| 📱 **Responsive UI** | Seamless experience on all screen sizes |
+| 📋 **Application Tracker** | View every job you've applied to |
+| 📱 **Responsive UI** | Seamless experience across all screen sizes |
 
 ### 🏢 Recruiter / Admin
+
 | Feature | Description |
 |---|---|
-| 🏢 **Company Management** | Create and manage your organization profile |
+| 🏢 **Company Management** | Create and manage your organization's profile |
 | ➕ **Post Jobs** | Add new openings with rich job details |
 | ✏️ **Edit & Delete** | Full CRUD control over job listings |
 | 👀 **Applicant Review** | View and manage all applicants per job |
-| 📊 **Recruiter Dashboard** | Centralized control panel for all activities |
+| 📊 **Recruiter Dashboard** | Centralized control panel for all activity |
 
 ### ⚙️ General
-- 🔒 JWT Authentication & Role-based Authorization
-- 🛡️ Protected Routes for secure page access
+
+- 🔒 JWT authentication & role-based authorization
+- 🛡️ Protected routes for secure page access
 - 🌐 RESTful API architecture
 - ☁️ Cloudinary integration for file/image uploads
-- 🔔 Toast Notifications for real-time feedback
+- 🔔 Toast notifications for real-time feedback
 - 🗄️ MongoDB Atlas cloud database
 
 ---
@@ -128,20 +134,20 @@ suman_job_portal/
 │
 ├── 📂 frontend/
 │   ├── src/
-│   │   ├── components/        # Reusable UI components
-│   │   ├── pages/             # Route-level page components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── store/             # Redux state management
-│   │   └── utils/             # Helper utilities
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Route-level page components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── store/          # Redux state management
+│   │   └── utils/          # Helper utilities
 │   ├── public/
 │   └── package.json
 │
 ├── 📂 backend/
-│   ├── controllers/           # Route handler logic
-│   ├── middleware/             # Auth & error middleware
-│   ├── models/                # Mongoose data models
-│   ├── routes/                # Express API routes
-│   ├── utils/                 # Utility functions
+│   ├── controllers/        # Route handler logic
+│   ├── middleware/         # Auth & error middleware
+│   ├── models/              # Mongoose data models
+│   ├── routes/              # Express API routes
+│   ├── utils/                # Utility functions
 │   └── package.json
 │
 └── README.md
@@ -164,16 +170,12 @@ You'll also need accounts for:
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) — cloud database
 - [Cloudinary](https://cloudinary.com) — file/image hosting
 
----
-
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/codecsuman/suman_job_portal.git
 cd suman_job_portal
 ```
-
----
 
 ### 2. Backend Setup
 
@@ -182,14 +184,12 @@ cd backend
 npm install
 ```
 
-Create a `.env` file in the `/backend` directory (see [Environment Variables](#-environment-variables) below), then:
+Create a `.env` file in `/backend` (see [Environment Variables](#-environment-variables) below), then:
 
 ```bash
 npm run dev
 # Server running at http://localhost:8000
 ```
-
----
 
 ### 3. Frontend Setup
 
@@ -239,34 +239,15 @@ VITE_API_URL=https://suman-job-portal.onrender.com/api/v1
 
 ## 🔮 Future Enhancements
 
-- [ ] 📄 Resume Upload & Parsing
-- [ ] 📧 Email Notifications for applications
-- [ ] 🗓️ Interview Scheduling System
-- [ ] 💬 In-app Chat — Recruiters ↔ Applicants
-- [ ] 🌙 Dark Mode Toggle
-- [ ] 🤖 AI-powered Job Recommendations
-- [ ] 🔖 Save / Bookmark Jobs
-- [ ] ✅ Company Verification Badge
-- [ ] 📊 Admin Analytics Dashboard
-
----
-
-## 👨‍💻 Author
-
-<div align="center">
-
-<br/>
-
-**Suman Jhanp**
-
-*MERN Stack Developer | Full-Stack Enthusiast*
-
-<br/>
-
-[![GitHub](https://img.shields.io/badge/GitHub-codecsuman-1f2937?style=for-the-badge&logo=github)](https://github.com/codecsuman)
-[![Portfolio](https://img.shields.io/badge/Portfolio-sumanjhanp.netlify.app-f59e0b?style=for-the-badge&logo=netlify)](https://sumanjhanp.netlify.app)
-
-</div>
+- [ ] 📄 Resume upload & parsing
+- [ ] 📧 Email notifications for applications
+- [ ] 🗓️ Interview scheduling system
+- [ ] 💬 In-app chat — recruiters ↔ applicants
+- [ ] 🌙 Dark mode toggle
+- [ ] 🤖 AI-powered job recommendations
+- [ ] 🔖 Save / bookmark jobs
+- [ ] ✅ Company verification badge
+- [ ] 📊 Admin analytics dashboard
 
 ---
 
@@ -288,13 +269,24 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ---
 
+## 👨‍💻 Author
+
 <div align="center">
 
 <br/>
 
-If this project helped you or sparked an idea — drop a ⭐ on the repo. It means a lot!
+**Suman Jhanp**
+
+*MERN Stack Developer | Full-Stack Enthusiast*
 
 <br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-codecsuman-1f2937?style=for-the-badge&logo=github)](https://github.com/codecsuman)
+[![Portfolio](https://img.shields.io/badge/Portfolio-sumanjhanp.netlify.app-f59e0b?style=for-the-badge&logo=netlify)](https://sumanjhanp.netlify.app)
+
+<br/>
+
+If this project helped you or sparked an idea — drop a ⭐ on the repo. It means a lot!
 
 **Made with ❤️ by [Suman Jhanp](https://sumanjhanp.netlify.app)**
 
