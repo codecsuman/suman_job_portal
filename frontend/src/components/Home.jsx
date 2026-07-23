@@ -9,37 +9,36 @@ import LatestJobs from "./LatestJobs";
 import Footer from "./shared/Footer";
 
 import useGetAllJobs from "@/hooks/useGetAllJobs";
+import { useSocket } from "@/hooks/useSocket";
 
 const Home = () => {
-    // Fetch latest jobs
-    useGetAllJobs();
+  useGetAllJobs();
 
-    const { user } = useSelector((store) => store.auth);
-    const navigate = useNavigate();
+  // 🔴 REAL-TIME: initialize socket
+  useSocket();
 
-    // Redirect recruiters
-    useEffect(() => {
-        if (user?.role === "recruiter") {
-            navigate("/admin/companies", { replace: true });
-        }
-    }, [user, navigate]);
+  const { user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
 
-    return (
-        <div className="min-h-screen flex flex-col bg-slate-50/30 antialiased">
-            <Navbar />
+  useEffect(() => {
+    if (user?.role === "recruiter") {
+      navigate("/admin/companies", { replace: true });
+    }
+  }, [user, navigate]);
 
-            <main className="flex-1">
-                {/* Section blocks organized with consistent visual flow */}
-                <div className="space-y-4">
-                    <HeroSection />
-                    <CategoryCarousel />
-                    <LatestJobs />
-                </div>
-            </main>
-
-            <Footer />
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50/30 antialiased">
+      <Navbar />
+      <main className="flex-1">
+        <div className="space-y-4">
+          <HeroSection />
+          <CategoryCarousel />
+          <LatestJobs />
         </div>
-    );
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default Home;

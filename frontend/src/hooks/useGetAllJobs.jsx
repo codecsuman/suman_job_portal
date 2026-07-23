@@ -7,7 +7,6 @@ import { JOB_API_END_POINT } from "@/utils/constant";
 
 const useGetAllJobs = () => {
   const dispatch = useDispatch();
-
   const { searchedQuery } = useSelector((store) => store.job);
 
   useEffect(() => {
@@ -15,15 +14,12 @@ const useGetAllJobs = () => {
 
     const fetchAllJobs = async () => {
       try {
-        const res = await axios.get(
-          `${JOB_API_END_POINT}/get`,
-          {
-            params: {
-              keyword: searchedQuery || "",
-            },
-            withCredentials: true,
-          }
-        );
+        const res = await axios.get(`${JOB_API_END_POINT}/get`, {
+          params: {
+            keyword: searchedQuery || "",
+          },
+          withCredentials: true,
+        });
 
         if (isMounted && res.data.success) {
           dispatch(setAllJobs(res.data.jobs));
@@ -31,7 +27,7 @@ const useGetAllJobs = () => {
       } catch (error) {
         console.error(
           "Failed to fetch jobs:",
-          error?.response?.data?.message || error.message
+          error?.response?.data?.message || error.message,
         );
       }
     };

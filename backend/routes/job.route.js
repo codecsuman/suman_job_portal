@@ -1,12 +1,12 @@
 import express from "express";
-
 import isAuthenticated from "../middlewares/isAuthenticated.js";
-
 import {
-    postJob,
-    getAllJobs,
-    getAdminJobs,
-    getJobById,
+  postJob,
+  getAllJobs,
+  getAdminJobs,
+  getJobById,
+  updateJob,
+  deleteJob,
 } from "../controllers/job.controller.js";
 
 const router = express.Router();
@@ -14,6 +14,8 @@ const router = express.Router();
 // Recruiter
 router.post("/post", isAuthenticated, postJob);
 router.get("/admin", isAuthenticated, getAdminJobs);
+router.put("/update/:id", isAuthenticated, updateJob);
+router.delete("/delete/:id", isAuthenticated, deleteJob);
 
 // Public
 router.get("/get", getAllJobs);

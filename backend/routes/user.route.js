@@ -1,10 +1,10 @@
 import express from "express";
 
 import {
-    register,
-    login,
-    logout,
-    updateProfile,
+  register,
+  login,
+  logout,
+  updateProfile,
 } from "../controllers/user.controller.js";
 
 import isAuthenticated from "../middlewares/isAuthenticated.js";
@@ -22,11 +22,6 @@ router.get("/logout", logout);
 // ===========================
 // User Profile
 // ===========================
-router.post(
-    "/profile/update",
-    isAuthenticated,
-    singleUpload,
-    updateProfile
-);
+router.post("/profile/update", isAuthenticated, singleUpload, updateProfile);
 
 export default router;

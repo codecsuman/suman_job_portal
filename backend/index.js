@@ -1,21 +1,25 @@
 import express from "express";
+import { createServer } from "http";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 
 import connectDB from "./utils/db.js";
+import { initializeSocket } from "./utils/socket.js";
+
 import userRoute from "./routes/user.route.js";
 import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
+import notificationRoute from "./routes/notification.route.js";
 
 // ===========================
 // Load Environment Variables
 // ===========================
 if (process.env.NODE_ENV === "production") {
-    dotenv.config({ path: ".env.production" });
+  dotenv.config({ path: ".env.production" });
 } else {
-    dotenv.config({ path: ".env.local" });
+  dotenv.config({ path: ".env.local" });
 }
 
 // ===========================
@@ -29,6 +33,12 @@ console.log("MONGO_URI:", process.env.MONGO_URI);
 console.log("==================================");
 
 const app = express();
+const httpServer = createServer(app);
+
+// ===========================
+// Initialize Socket.io
+// ===========================
+const io = initializeSocket(httpServer);
 
 // ===========================
 // Middleware
@@ -41,8 +51,8 @@ app.use(cookieParser());
 // CORS Configuration
 // ===========================
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -54,6 +64,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
+app.use("/api/v1/notification", notificationRoute);
 
 // ===========================
 // Start Server
@@ -61,17 +72,17 @@ app.use("/api/v1/application", applicationRoute);
 const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
-    try {
-        await connectDB();
-        console.log("MongoDB Connected Successfully");
+  try {
+    await connectDB();
+    console.log("MongoDB Connected Successfully");
 
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error("Failed to start server:", error.message);
-        process.exit(1);
-    }
+    httpServer.listen(PORT, () => {
+      console.log(`🚀 Server + Socket.io running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
 };
 
 startServer();

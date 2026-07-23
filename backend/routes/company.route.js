@@ -3,10 +3,11 @@ import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js";
 
 import {
-    registerCompany,
-    getCompany,
-    getCompanyById,
-    updateCompany,
+  registerCompany,
+  getCompany,
+  getCompanyById,
+  updateCompany,
+  deleteCompany,
 } from "../controllers/company.controller.js";
 
 const router = express.Router();
@@ -21,11 +22,9 @@ router.get("/get", isAuthenticated, getCompany);
 router.get("/get/:id", isAuthenticated, getCompanyById);
 
 // Update Company
-router.put(
-    "/update/:id",
-    isAuthenticated,
-    singleUpload,
-    updateCompany
-);
+router.put("/update/:id", isAuthenticated, singleUpload, updateCompany);
+
+// 🔴 NEW: Delete Company
+router.delete("/delete/:id", isAuthenticated, deleteCompany);
 
 export default router;
