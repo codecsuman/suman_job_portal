@@ -119,9 +119,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[480px] rounded-3xl border border-slate-100 p-6 bg-white shadow-2xl gap-0">
-        <DialogHeader className="pb-4 border-b border-slate-100">
-          <DialogTitle className="text-xl font-black text-slate-800 tracking-tight">
+      <DialogContent
+        className="font-body sm:max-w-[480px] rounded-3xl border p-6 bg-white shadow-2xl gap-0"
+        style={{ borderColor: "var(--line)" }}
+      >
+        <DialogHeader
+          className="pb-4 border-b"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <DialogTitle
+            className="font-display font-semibold text-xl tracking-tight"
+            style={{ color: "var(--ink)" }}
+          >
             Update Profile
           </DialogTitle>
         </DialogHeader>
@@ -131,13 +140,22 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             {/* 🔧 NEW: photo preview + click-to-upload avatar */}
             <div className="flex flex-col items-center gap-3 pb-2">
               <label htmlFor="file" className="relative cursor-pointer group">
-                <Avatar className="h-24 w-24 rounded-2xl border border-slate-100 shadow-inner">
+                <Avatar
+                  className="h-24 w-24 rounded-2xl border shadow-inner"
+                  style={{ borderColor: "var(--line)" }}
+                >
                   <AvatarImage
                     src={displayedPhoto}
                     alt={input.fullname}
                     className="object-cover"
                   />
-                  <AvatarFallback className="rounded-2xl bg-indigo-50 font-black text-xl text-indigo-600">
+                  <AvatarFallback
+                    className="rounded-2xl font-black text-xl"
+                    style={{
+                      background: "rgba(255,178,56,0.16)",
+                      color: "var(--marigold-deep)",
+                    }}
+                  >
                     {input.fullname?.charAt(0)?.toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -153,7 +171,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 onChange={fileChangeHandler}
                 className="hidden"
               />
-              <p className="text-xs font-semibold text-slate-400">
+              <p
+                className="font-mono-ui text-xs font-semibold"
+                style={{ color: "var(--ink-soft)" }}
+              >
                 Click the photo to change it
               </p>
             </div>
@@ -161,7 +182,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="fullname"
-                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+                className="font-mono-ui text-left text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
               >
                 Name
               </Label>
@@ -172,14 +194,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 placeholder="Enter your name"
                 value={input.fullname}
                 onChange={changeEventHandler}
-                className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
+                className="col-span-3 h-10 rounded-xl text-sm font-semibold transition-all duration-200"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
               />
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="email"
-                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+                className="font-mono-ui text-left text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
               >
                 Email
               </Label>
@@ -190,14 +214,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 placeholder="Enter your email"
                 value={input.email}
                 onChange={changeEventHandler}
-                className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
+                className="col-span-3 h-10 rounded-xl text-sm font-semibold transition-all duration-200"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
               />
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="phoneNumber"
-                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+                className="font-mono-ui text-left text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
               >
                 Phone
               </Label>
@@ -208,14 +234,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 placeholder="Enter phone number"
                 value={input.phoneNumber}
                 onChange={changeEventHandler}
-                className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
+                className="col-span-3 h-10 rounded-xl text-sm font-semibold transition-all duration-200"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
               />
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="bio"
-                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+                className="font-mono-ui text-left text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
               >
                 Bio
               </Label>
@@ -226,14 +254,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 placeholder="Tell something about yourself"
                 value={input.bio}
                 onChange={changeEventHandler}
-                className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
+                className="col-span-3 h-10 rounded-xl text-sm font-semibold transition-all duration-200"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
               />
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="skills"
-                className="text-left text-xs font-bold text-slate-400 uppercase tracking-wider"
+                className="font-mono-ui text-left text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
               >
                 Skills
               </Label>
@@ -244,24 +274,36 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 placeholder="React, Node.js, MongoDB"
                 value={input.skills}
                 onChange={changeEventHandler}
-                className="col-span-3 h-10 rounded-xl border-slate-200 text-sm font-semibold text-slate-700 placeholder:text-slate-300 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 transition-all duration-200"
+                className="col-span-3 h-10 rounded-xl text-sm font-semibold transition-all duration-200"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
               />
             </div>
           </div>
 
-          <DialogFooter className="pt-4 border-t border-slate-100">
+          <DialogFooter
+            className="pt-4 border-t"
+            style={{ borderColor: "var(--line)" }}
+          >
             {loading ? (
               <Button
                 disabled
-                className="w-full h-11 font-bold rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center gap-2 pointer-events-none"
+                className="w-full h-11 font-bold rounded-xl flex items-center justify-center gap-2 pointer-events-none"
+                style={{
+                  background: "var(--paper-dim)",
+                  color: "var(--ink-soft)",
+                }}
               >
-                <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
+                <Loader2
+                  className="h-4 w-4 animate-spin"
+                  style={{ color: "var(--ink-soft)" }}
+                />
                 Updating Records...
               </Button>
             ) : (
               <Button
                 type="submit"
-                className="w-full h-11 rounded-xl bg-slate-900 text-white font-bold text-sm tracking-wide hover:bg-slate-800 transition-all active:scale-[0.98] shadow-md shadow-slate-900/10"
+                className="w-full h-11 rounded-xl font-bold text-sm tracking-wide transition-all active:scale-[0.98] shadow-md"
+                style={{ background: "var(--ink)", color: "white" }}
               >
                 Update Profile
               </Button>

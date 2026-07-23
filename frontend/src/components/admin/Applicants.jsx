@@ -92,65 +92,117 @@ const Applicants = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div
+      className="min-h-screen font-body"
+      style={{ background: "var(--paper)" }}
+    >
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 shadow-2xl mb-10">
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-8">
+          <div>
+            <span
+              className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-mono-ui text-[11px] tracking-widest uppercase mb-3"
+              style={{ borderColor: "var(--line)", color: "var(--ink-soft)" }}
+            >
+              <Users className="w-3 h-3" style={{ color: "var(--teal)" }} />
+              Recruiter Dashboard
+            </span>
+            <h1
+              className="font-display font-semibold text-3xl md:text-4xl tracking-tight"
+              style={{ color: "var(--ink)" }}
+            >
+              Applicants
+            </h1>
+            <p
+              className="mt-2 text-sm md:text-base max-w-xl"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Review applicants, update statuses, and schedule interviews from
+              one place.
+            </p>
+          </div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 px-8 py-10">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white">
-                Applicants Dashboard
-              </h1>
-              <p className="mt-3 text-blue-100 text-lg max-w-2xl">
-                Review applicants, manage applications, schedule interviews, and
-                track hiring progress from one place.
-              </p>
+          <div
+            className="rounded-3xl border px-10 py-6 text-center shrink-0"
+            style={{
+              borderColor: "var(--line)",
+              background: "var(--paper-dim)",
+            }}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <Zap
+                className="w-5 h-5 animate-pulse"
+                style={{ color: "var(--marigold-deep)" }}
+              />
+              <h2
+                className="font-display font-semibold text-4xl"
+                style={{ color: "var(--ink)" }}
+              >
+                {applicants?.applications?.length || 0}
+              </h2>
             </div>
-
-            <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-3xl px-10 py-6 text-center shadow-xl">
-              <div className="flex items-center justify-center gap-2">
-                <Zap className="w-6 h-6 text-yellow-300 animate-pulse" />
-                <h2 className="text-5xl font-bold text-white">
-                  {applicants?.applications?.length || 0}
-                </h2>
-              </div>
-              <p className="mt-2 text-blue-100 font-medium tracking-wide">
-                Total Applicants
-              </p>
-              <p className="text-xs text-blue-200 mt-1">Updates in real-time</p>
-            </div>
+            <p
+              className="mt-1 font-mono-ui text-xs font-bold uppercase tracking-wider"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Total Applicants
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
           <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            <span
+              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+              style={{ background: "var(--teal)" }}
+            ></span>
+            <span
+              className="relative inline-flex rounded-full h-3 w-3"
+              style={{ background: "var(--teal)" }}
+            ></span>
           </span>
-          <span className="text-xs font-semibold text-green-600 uppercase tracking-wider">
+          <span
+            className="font-mono-ui text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--teal)" }}
+          >
             Live — new applicants and interview updates appear instantly
           </span>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-8 py-6 border-b bg-gradient-to-r from-gray-50 to-blue-50">
+        <div
+          className="rounded-3xl border bg-white overflow-hidden shadow-[0_8px_30px_-12px_rgba(18,23,43,0.08)]"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <div
+            className="flex flex-col md:flex-row items-center justify-between gap-4 px-8 py-6 border-b"
+            style={{
+              borderColor: "var(--line)",
+              background: "var(--paper-dim)",
+            }}
+          >
             <div>
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2
+                className="font-display font-semibold text-xl"
+                style={{ color: "var(--ink)" }}
+              >
                 Applicants List
               </h2>
-              <p className="text-gray-500 mt-1">
+              <p className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
                 View resumes, update application status, and schedule
                 interviews.
               </p>
             </div>
 
-            <div className="bg-blue-100 text-blue-700 font-semibold px-5 py-2 rounded-full shadow flex items-center gap-2">
-              <Users className="w-4 h-4" />
+            <div
+              className="font-mono-ui font-bold text-xs px-4 py-2 rounded-full flex items-center gap-2"
+              style={{
+                background: "rgba(0,184,153,0.1)",
+                color: "var(--teal)",
+              }}
+            >
+              <Users className="w-3.5 h-3.5" />
               {applicants?.applications?.length || 0} Candidates
             </div>
           </div>

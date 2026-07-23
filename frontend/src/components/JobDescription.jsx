@@ -89,12 +89,24 @@ const JobDescription = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50/30 flex flex-col">
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: "var(--paper)" }}
+      >
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-300 border-t-blue-600" />
-            <p className="text-sm font-semibold text-slate-500 tracking-wide">
+            <div
+              className="h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"
+              style={{
+                borderColor: "var(--line)",
+                borderTopColor: "var(--teal)",
+              }}
+            />
+            <p
+              className="font-mono-ui text-sm font-semibold tracking-wide"
+              style={{ color: "var(--ink-soft)" }}
+            >
               Loading job spec details...
             </p>
           </div>
@@ -104,48 +116,78 @@ const JobDescription = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/30 flex flex-col antialiased">
+    <div
+      className="min-h-screen flex flex-col antialiased font-body"
+      style={{ background: "var(--paper)" }}
+    >
       <Navbar />
 
       <main className="flex-1 max-w-4xl w-full mx-auto my-10 px-6">
         <div className="flex items-center gap-2 mb-4">
           <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            <span
+              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+              style={{ background: "var(--teal)" }}
+            ></span>
+            <span
+              className="relative inline-flex rounded-full h-3 w-3"
+              style={{ background: "var(--teal)" }}
+            ></span>
           </span>
-          <span className="text-xs font-semibold text-green-600 uppercase tracking-wider">
+          <span
+            className="font-mono-ui text-xs font-semibold uppercase tracking-wider"
+            style={{ color: "var(--teal)" }}
+          >
             Live Updates Active
           </span>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+        <div
+          className="bg-white rounded-3xl border p-8 shadow-[0_8px_30px_rgb(0,0,0,0.02)]"
+          style={{ borderColor: "var(--line)" }}
+        >
+          <div
+            className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b"
+            style={{ borderColor: "var(--line)" }}
+          >
             <div className="space-y-3">
-              <h1 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight leading-tight">
+              <h1
+                className="font-display font-semibold text-2xl md:text-3xl tracking-tight leading-tight"
+                style={{ color: "var(--ink)" }}
+              >
                 {singleJob?.title}
               </h1>
-              <div className="flex flex-wrap gap-2">
-                <Badge
-                  variant="ghost"
-                  className="font-bold text-xs px-2.5 py-1 rounded-lg pointer-events-none bg-blue-50 text-blue-700 border border-blue-100"
+              <div className="flex flex-wrap gap-2 font-mono-ui text-xs">
+                <span
+                  className="font-bold px-2.5 py-1 rounded-lg"
+                  style={{
+                    background: "var(--paper-dim)",
+                    color: "var(--ink-soft)",
+                  }}
                 >
                   {singleJob?.position} Positions
-                </Badge>
-                <Badge
-                  variant="ghost"
-                  className="font-bold text-xs px-2.5 py-1 rounded-lg pointer-events-none bg-emerald-50 text-emerald-700 border border-emerald-100"
+                </span>
+                <span
+                  className="font-bold px-2.5 py-1 rounded-lg"
+                  style={{
+                    background: "rgba(0,184,153,0.1)",
+                    color: "var(--teal)",
+                  }}
                 >
                   {singleJob?.jobType}
-                </Badge>
-                <Badge
-                  variant="ghost"
-                  className="font-bold text-xs px-2.5 py-1 rounded-lg pointer-events-none bg-amber-50 text-amber-700 border border-amber-100"
+                </span>
+                <span
+                  className="font-bold px-2.5 py-1 rounded-lg"
+                  style={{
+                    background: "rgba(255,178,56,0.16)",
+                    color: "var(--marigold-deep)",
+                  }}
                 >
                   ₹ {singleJob?.salary} LPA
-                </Badge>
+                </span>
                 <Badge
                   variant="ghost"
-                  className="font-bold text-xs px-2.5 py-1 rounded-lg pointer-events-none bg-purple-50 text-purple-700 border border-purple-100 flex items-center gap-1"
+                  className="font-bold px-2.5 py-1 rounded-lg pointer-events-none flex items-center gap-1 bg-purple-50 text-purple-700 border border-purple-100"
                 >
                   <Users className="w-3 h-3" />
                   {singleJob?.applications?.length || 0} Applied
@@ -156,11 +198,16 @@ const JobDescription = () => {
             <Button
               disabled={isApplied || applying}
               onClick={applyJobHandler}
-              className={`h-11 px-6 font-bold text-sm tracking-wide rounded-xl transition-all duration-300 active:scale-95 whitespace-nowrap shrink-0 ${
+              className="h-11 px-6 font-bold text-sm tracking-wide rounded-xl transition-all duration-300 active:scale-95 whitespace-nowrap shrink-0"
+              style={
                 isApplied
-                  ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-100 cursor-not-allowed border border-emerald-200"
-                  : "bg-slate-900 text-white hover:bg-slate-800 shadow-md shadow-slate-900/10"
-              }`}
+                  ? {
+                      background: "rgba(0,184,153,0.12)",
+                      color: "var(--teal)",
+                      border: "1px solid rgba(0,184,153,0.3)",
+                    }
+                  : { background: "var(--ink)", color: "white" }
+              }
             >
               {applying ? (
                 <span className="flex items-center gap-2">
@@ -176,16 +223,32 @@ const JobDescription = () => {
           </div>
 
           <div className="mt-8">
-            <h2 className="font-extrabold text-slate-800 text-lg tracking-tight mb-3">
-              Job Requirements & Description
+            <h2
+              className="font-display font-semibold text-lg tracking-tight mb-3"
+              style={{ color: "var(--ink)" }}
+            >
+              Job Requirements &amp; Description
             </h2>
-            <p className="text-slate-600 font-medium text-sm leading-relaxed bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
+            <p
+              className="font-medium text-sm leading-relaxed p-4 rounded-2xl border"
+              style={{
+                color: "var(--ink-soft)",
+                background: "var(--paper-dim)",
+                borderColor: "var(--line)",
+              }}
+            >
               {singleJob?.description}
             </p>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-slate-100">
-            <h2 className="font-extrabold text-slate-800 text-lg tracking-tight mb-4">
+          <div
+            className="mt-8 pt-6 border-t"
+            style={{ borderColor: "var(--line)" }}
+          >
+            <h2
+              className="font-display font-semibold text-lg tracking-tight mb-4"
+              style={{ color: "var(--ink)" }}
+            >
               Position Details
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
@@ -215,12 +278,19 @@ const JobDescription = () => {
               ].map((spec, i) => (
                 <div
                   key={i}
-                  className="flex justify-between items-center py-2.5 border-b border-slate-50"
+                  className="flex justify-between items-center py-2.5 border-b"
+                  style={{ borderColor: "var(--line)" }}
                 >
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <span
+                    className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {spec.label}
                   </span>
-                  <span className="text-sm font-semibold text-slate-700 max-w-[200px] sm:max-w-[240px] truncate text-right">
+                  <span
+                    className="text-sm font-semibold max-w-[200px] sm:max-w-[240px] truncate text-right"
+                    style={{ color: "var(--ink)" }}
+                  >
                     {spec.value}
                   </span>
                 </div>

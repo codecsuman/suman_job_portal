@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, FilePlus2 } from "lucide-react";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -96,60 +96,110 @@ const PostJob = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div
+      className="min-h-screen font-body"
+      style={{ background: "var(--paper)" }}
+    >
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-6 py-10">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-2xl mb-10">
-          <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+        {/* Header */}
+        <div className="flex items-center gap-5 mb-8">
+          <div
+            className="p-5 rounded-2xl border"
+            style={{
+              borderColor: "var(--marigold)",
+              background: "rgba(255,178,56,0.1)",
+            }}
+          >
+            <FilePlus2
+              className="w-9 h-9"
+              style={{ color: "var(--marigold-deep)" }}
+            />
+          </div>
 
-          <div className="relative z-10 flex items-center gap-6 px-8 py-10">
-            <div>
-              <h1 className="text-4xl font-bold text-white">Post a New Job</h1>
-              <p className="text-blue-100 mt-2">
-                Fill out the details below to publish a new job opening for job
-                seekers.
-              </p>
-            </div>
+          <div>
+            <span
+              className="inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono-ui text-[10px] tracking-widest uppercase mb-1.5"
+              style={{ borderColor: "var(--line)", color: "var(--ink-soft)" }}
+            >
+              Recruiter Dashboard
+            </span>
+            <h1
+              className="font-display font-semibold text-2xl md:text-3xl tracking-tight"
+              style={{ color: "var(--ink)" }}
+            >
+              Post a New Job
+            </h1>
+            <p
+              className="mt-1 text-sm md:text-base"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Fill out the details below to publish a new job opening for job
+              seekers.
+            </p>
           </div>
         </div>
 
         <form
           onSubmit={submitHandler}
-          className="bg-white rounded-3xl shadow-2xl border p-8"
+          className="rounded-3xl border bg-white p-8 shadow-[0_8px_30px_-12px_rgba(18,23,43,0.08)]"
+          style={{ borderColor: "var(--line)" }}
         >
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800">
+          <div
+            className="mb-8 pb-6 border-b"
+            style={{ borderColor: "var(--line)" }}
+          >
+            <h2
+              className="font-display font-semibold text-xl"
+              style={{ color: "var(--ink)" }}
+            >
               Job Specifications
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <Label className="mb-2 block">Title</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Title
+              </Label>
               <Input
                 required
                 name="title"
                 value={input.title}
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             <div>
-              <Label className="mb-2 block">Description</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Description
+              </Label>
               <Input
                 required
                 name="description"
                 value={input.description}
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             <div>
-              <Label className="mb-2 block">Requirements</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Requirements
+              </Label>
               <Input
                 required
                 name="requirements"
@@ -157,11 +207,17 @@ const PostJob = () => {
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
                 placeholder="React, Node.js, MongoDB (comma-separated)"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             <div>
-              <Label className="mb-2 block">Salary (LPA)</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Salary (LPA)
+              </Label>
               <Input
                 required
                 type="number"
@@ -170,17 +226,26 @@ const PostJob = () => {
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
                 placeholder="e.g. 6 for ₹6 LPA"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             {/* 🔧 FIXED: was a free-text Input — now the exact same list students filter by */}
             <div>
-              <Label className="mb-2 block">Location</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Location
+              </Label>
               <Select
                 onValueChange={setField("location")}
                 value={input.location}
               >
-                <SelectTrigger className="w-full h-11 rounded-xl">
+                <SelectTrigger
+                  className="w-full h-11 rounded-xl"
+                  style={{ borderColor: "var(--line)" }}
+                >
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -197,12 +262,20 @@ const PostJob = () => {
 
             {/* 🔧 NEW: Industry — didn't exist before at all */}
             <div>
-              <Label className="mb-2 block">Industry / Role Category</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Industry / Role Category
+              </Label>
               <Select
                 onValueChange={setField("category")}
                 value={input.category}
               >
-                <SelectTrigger className="w-full h-11 rounded-xl">
+                <SelectTrigger
+                  className="w-full h-11 rounded-xl"
+                  style={{ borderColor: "var(--line)" }}
+                >
                   <SelectValue placeholder="Select industry" />
                 </SelectTrigger>
                 <SelectContent>
@@ -218,9 +291,17 @@ const PostJob = () => {
             </div>
 
             <div>
-              <Label className="mb-2 block">Job Type</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Job Type
+              </Label>
               <Select onValueChange={setField("jobType")} value={input.jobType}>
-                <SelectTrigger className="w-full h-11 rounded-xl">
+                <SelectTrigger
+                  className="w-full h-11 rounded-xl"
+                  style={{ borderColor: "var(--line)" }}
+                >
                   <SelectValue placeholder="Select job type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -236,7 +317,12 @@ const PostJob = () => {
             </div>
 
             <div>
-              <Label className="mb-2 block">Experience (years)</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Experience (years)
+              </Label>
               <Input
                 required
                 type="number"
@@ -244,11 +330,17 @@ const PostJob = () => {
                 value={input.experience}
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             <div>
-              <Label className="mb-2 block">No. of Positions</Label>
+              <Label
+                className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                No. of Positions
+              </Label>
               <Input
                 required
                 type="number"
@@ -256,14 +348,23 @@ const PostJob = () => {
                 value={input.position}
                 onChange={changeEventHandler}
                 className="h-11 rounded-xl"
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
 
             {companies.length > 0 && (
               <div className="md:col-span-2">
-                <Label className="mb-2 block">Select Company</Label>
+                <Label
+                  className="mb-2 block font-mono-ui text-[11px] uppercase tracking-wider"
+                  style={{ color: "var(--ink-soft)" }}
+                >
+                  Select Company
+                </Label>
                 <Select onValueChange={selectChangeHandler}>
-                  <SelectTrigger className="w-full h-11 rounded-xl">
+                  <SelectTrigger
+                    className="w-full h-11 rounded-xl"
+                    style={{ borderColor: "var(--line)" }}
+                  >
                     <SelectValue placeholder="Select a company" />
                   </SelectTrigger>
                   <SelectContent>
@@ -287,23 +388,31 @@ const PostJob = () => {
             {loading ? (
               <Button
                 disabled
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600"
+                className="w-full h-12 rounded-xl"
+                style={{ background: "var(--ink-soft)" }}
               >
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 Posting Job...
               </Button>
             ) : (
-              <Button
+              <button
                 type="submit"
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 hover:scale-[1.02] shadow-lg"
+                className="w-full h-12 rounded-xl font-bold transition-transform hover:scale-[1.01] active:scale-95"
+                style={{ background: "var(--ink)", color: "var(--marigold)" }}
               >
                 Post New Job
-              </Button>
+              </button>
             )}
 
             {companies.length === 0 && (
-              <div className="bg-red-50 border border-red-200 rounded-xl p-4 mt-4 text-center">
-                <p className="text-red-600 text-sm font-semibold">
+              <div
+                className="rounded-xl p-4 mt-4 text-center border"
+                style={{
+                  background: "rgba(225,29,72,0.06)",
+                  borderColor: "rgba(225,29,72,0.2)",
+                }}
+              >
+                <p className="text-sm font-semibold text-rose-600">
                   Please register a company before posting a job.
                 </p>
               </div>

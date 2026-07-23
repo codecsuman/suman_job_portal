@@ -155,31 +155,43 @@ const ApplicantsTable = () => {
   };
 
   return (
-    <div className="rounded-3xl border bg-white shadow-xl overflow-hidden">
+    <div
+      className="rounded-3xl border bg-white overflow-hidden font-body"
+      style={{ borderColor: "var(--line)" }}
+    >
       <div className="overflow-x-auto">
         <Table>
-          <TableCaption className="py-5 text-gray-500">
+          <TableCaption
+            className="py-5 font-mono-ui text-xs"
+            style={{ color: "var(--ink-soft)" }}
+          >
             Manage all applicants for this job posting.
           </TableCaption>
 
-          <TableHeader className="bg-gradient-to-r from-blue-600 to-indigo-600">
+          <TableHeader style={{ background: "var(--ink)" }}>
             <TableRow className="hover:bg-transparent">
-              <TableHead className="text-white font-semibold">
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
                 Full Name
               </TableHead>
-              <TableHead className="text-white font-semibold">Email</TableHead>
-              <TableHead className="text-white font-semibold">
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
+                Email
+              </TableHead>
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
                 Contact
               </TableHead>
-              <TableHead className="text-white font-semibold">Resume</TableHead>
-              <TableHead className="text-white font-semibold">
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
+                Resume
+              </TableHead>
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
                 Applied On
               </TableHead>
-              <TableHead className="text-white font-semibold">Status</TableHead>
-              <TableHead className="text-white font-semibold">
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
+                Status
+              </TableHead>
+              <TableHead className="font-mono-ui text-[11px] uppercase tracking-wider text-white">
                 Interview
               </TableHead>
-              <TableHead className="text-right text-white font-semibold">
+              <TableHead className="text-right font-mono-ui text-[11px] uppercase tracking-wider text-white">
                 Action
               </TableHead>
             </TableRow>
@@ -190,17 +202,27 @@ const ApplicantsTable = () => {
               applicants.applications.map((item) => (
                 <TableRow
                   key={item._id}
-                  className="hover:bg-blue-50 transition-all duration-200"
+                  className="hover:bg-black/[0.02] transition-all duration-200"
+                  style={{ borderColor: "var(--line)" }}
                 >
-                  <TableCell className="font-semibold text-gray-800">
+                  <TableCell
+                    className="font-bold"
+                    style={{ color: "var(--ink)" }}
+                  >
                     {item?.applicant?.fullname}
                   </TableCell>
 
-                  <TableCell className="text-gray-600">
+                  <TableCell
+                    className="font-medium"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {item?.applicant?.email}
                   </TableCell>
 
-                  <TableCell className="text-gray-600">
+                  <TableCell
+                    className="font-medium"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {item?.applicant?.phoneNumber}
                   </TableCell>
 
@@ -210,7 +232,11 @@ const ApplicantsTable = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => openResume(item.applicant)}
-                          className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-200 transition text-xs font-bold"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition text-xs font-bold"
+                          style={{
+                            background: "rgba(0,184,153,0.1)",
+                            color: "var(--teal)",
+                          }}
                         >
                           <Eye className="w-3.5 h-3.5" />
                           View
@@ -220,18 +246,22 @@ const ApplicantsTable = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           download
-                          className="text-slate-400 hover:text-slate-600 transition"
+                          className="transition"
+                          style={{ color: "var(--ink-soft)" }}
                           title="Download resume"
                         >
                           <FileText className="w-4 h-4" />
                         </a>
                       </div>
                     ) : (
-                      <span className="text-gray-400">No Resume</span>
+                      <span style={{ color: "var(--line)" }}>No Resume</span>
                     )}
                   </TableCell>
 
-                  <TableCell className="text-gray-600">
+                  <TableCell
+                    className="font-mono-ui text-xs"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {item?.createdAt?.split("T")[0]}
                   </TableCell>
 
@@ -260,22 +290,32 @@ const ApplicantsTable = () => {
                   <TableCell>
                     {item?.interview?.date ? (
                       <div className="text-xs">
-                        <p className="font-bold text-slate-700">
+                        <p
+                          className="font-bold"
+                          style={{ color: "var(--ink)" }}
+                        >
                           {item.interview.date?.split("T")[0]} ·{" "}
                           {item.interview.time}
                         </p>
-                        <p className="text-slate-400 uppercase tracking-wide font-semibold">
+                        <p
+                          className="font-mono-ui uppercase tracking-wide font-semibold"
+                          style={{ color: "var(--ink-soft)" }}
+                        >
                           {item.interview.mode}
                         </p>
                       </div>
                     ) : (
-                      <span className="text-gray-400 text-xs">
+                      <span
+                        className="text-xs"
+                        style={{ color: "var(--ink-soft)" }}
+                      >
                         Not scheduled
                       </span>
                     )}
                     <button
                       onClick={() => openInterviewDialog(item)}
-                      className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline"
+                      className="mt-1 inline-flex items-center gap-1 text-xs font-bold hover:underline"
+                      style={{ color: "var(--marigold-deep)" }}
                     >
                       <CalendarClock className="w-3.5 h-3.5" />
                       {item?.interview?.date ? "Reschedule" : "Schedule"}
@@ -285,21 +325,28 @@ const ApplicantsTable = () => {
                   <TableCell className="text-right">
                     <Popover>
                       <PopoverTrigger asChild>
-                        <button className="p-2 rounded-full hover:bg-gray-100 transition">
-                          <MoreHorizontal className="w-5 h-5 text-gray-600" />
+                        <button className="p-2 rounded-full hover:bg-black/5 transition">
+                          <MoreHorizontal
+                            className="w-5 h-5"
+                            style={{ color: "var(--ink-soft)" }}
+                          />
                         </button>
                       </PopoverTrigger>
 
-                      <PopoverContent className="w-40 rounded-xl p-2 shadow-xl">
+                      <PopoverContent
+                        className="w-40 rounded-xl p-2 shadow-xl border"
+                        style={{ borderColor: "var(--line)" }}
+                      >
                         {shortlistingStatus.map((status) => (
                           <div
                             key={status}
                             onClick={() => statusHandler(status, item._id)}
                             className={`cursor-pointer rounded-lg px-3 py-2 my-1 transition font-medium ${
                               status === "Accepted"
-                                ? "hover:bg-green-100 hover:text-green-700"
-                                : "hover:bg-red-100 hover:text-red-700"
+                                ? "hover:bg-emerald-50 hover:text-emerald-700"
+                                : "hover:bg-rose-50 hover:text-rose-700"
                             }`}
+                            style={{ color: "var(--ink-soft)" }}
                           >
                             {status}
                           </div>
@@ -313,11 +360,17 @@ const ApplicantsTable = () => {
               <TableRow>
                 <TableCell colSpan={8} className="text-center py-16">
                   <div className="flex flex-col items-center">
-                    <FileText className="w-12 h-12 text-gray-300 mb-3" />
-                    <h2 className="text-xl font-semibold text-gray-700">
+                    <FileText
+                      className="w-12 h-12 mb-3"
+                      style={{ color: "var(--line)" }}
+                    />
+                    <h2
+                      className="font-display font-semibold text-xl"
+                      style={{ color: "var(--ink)" }}
+                    >
                       No Applicants Found
                     </h2>
-                    <p className="text-gray-500 mt-1">
+                    <p className="mt-1" style={{ color: "var(--ink-soft)" }}>
                       Applicants will appear here once users apply for this job.
                     </p>
                   </div>
@@ -330,9 +383,15 @@ const ApplicantsTable = () => {
 
       {/* ===================== Resume Preview Dialog ===================== */}
       <Dialog open={resumeOpen} onOpenChange={setResumeOpen}>
-        <DialogContent className="max-w-3xl h-[80vh] rounded-2xl p-0 overflow-hidden">
-          <DialogHeader className="px-6 pt-5 pb-3 border-b border-slate-100">
-            <DialogTitle className="font-bold">
+        <DialogContent className="max-w-3xl h-[80vh] rounded-2xl p-0 overflow-hidden font-body">
+          <DialogHeader
+            className="px-6 pt-5 pb-3 border-b"
+            style={{ borderColor: "var(--line)" }}
+          >
+            <DialogTitle
+              className="font-display font-semibold"
+              style={{ color: "var(--ink)" }}
+            >
               {activeResume?.resumeOriginalName || "Resume Preview"}
             </DialogTitle>
           </DialogHeader>
@@ -348,38 +407,59 @@ const ApplicantsTable = () => {
 
       {/* ===================== Interview Scheduling Dialog ===================== */}
       <Dialog open={interviewOpen} onOpenChange={setInterviewOpen}>
-        <DialogContent className="max-w-md rounded-2xl">
+        <DialogContent className="max-w-md rounded-2xl font-body">
           <DialogHeader>
-            <DialogTitle className="font-bold">
+            <DialogTitle
+              className="font-display font-semibold"
+              style={{ color: "var(--ink)" }}
+            >
               Schedule Interview — {activeApplicant?.applicant?.fullname}
             </DialogTitle>
           </DialogHeader>
 
           <div className="grid grid-cols-2 gap-3 py-2">
             <div className="col-span-1">
-              <Label className="text-xs font-bold text-slate-500">Date</Label>
+              <Label
+                className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Date
+              </Label>
               <Input
                 type="date"
                 value={interviewForm.date}
                 onChange={(e) =>
                   setInterviewForm({ ...interviewForm, date: e.target.value })
                 }
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
             <div className="col-span-1">
-              <Label className="text-xs font-bold text-slate-500">Time</Label>
+              <Label
+                className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Time
+              </Label>
               <Input
                 type="time"
                 value={interviewForm.time}
                 onChange={(e) =>
                   setInterviewForm({ ...interviewForm, time: e.target.value })
                 }
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
             <div className="col-span-2">
-              <Label className="text-xs font-bold text-slate-500">Mode</Label>
+              <Label
+                className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
+                Mode
+              </Label>
               <select
-                className="w-full h-10 rounded-md border border-slate-200 px-3 text-sm font-medium"
+                className="w-full h-10 rounded-md border px-3 text-sm font-medium"
+                style={{ borderColor: "var(--line)", color: "var(--ink)" }}
                 value={interviewForm.mode}
                 onChange={(e) =>
                   setInterviewForm({ ...interviewForm, mode: e.target.value })
@@ -391,7 +471,10 @@ const ApplicantsTable = () => {
               </select>
             </div>
             <div className="col-span-2">
-              <Label className="text-xs font-bold text-slate-500">
+              <Label
+                className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
                 {interviewForm.mode === "offline" ? "Location" : "Meeting Link"}
               </Label>
               <Input
@@ -407,10 +490,14 @@ const ApplicantsTable = () => {
                     location: e.target.value,
                   })
                 }
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
             <div className="col-span-2">
-              <Label className="text-xs font-bold text-slate-500">
+              <Label
+                className="font-mono-ui text-xs font-bold uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
                 Notes (optional)
               </Label>
               <Textarea
@@ -419,6 +506,7 @@ const ApplicantsTable = () => {
                 onChange={(e) =>
                   setInterviewForm({ ...interviewForm, notes: e.target.value })
                 }
+                style={{ borderColor: "var(--line)" }}
               />
             </div>
           </div>
@@ -428,13 +516,15 @@ const ApplicantsTable = () => {
               variant="outline"
               onClick={() => setInterviewOpen(false)}
               className="rounded-xl"
+              style={{ borderColor: "var(--line)" }}
             >
               Cancel
             </Button>
             <Button
               onClick={submitInterview}
               disabled={scheduling}
-              className="rounded-xl bg-slate-900 hover:bg-slate-800"
+              className="rounded-xl"
+              style={{ background: "var(--ink)", color: "white" }}
             >
               {scheduling ? "Scheduling..." : "Confirm Schedule"}
             </Button>

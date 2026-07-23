@@ -30,20 +30,48 @@ const AppliedJobTable = () => {
   const { allAppliedJobs } = useSelector((store) => store.job);
 
   return (
-    <div className="rounded-2xl border border-slate-100 overflow-hidden">
+    <div
+      className="font-body rounded-2xl border overflow-hidden"
+      style={{ borderColor: "var(--line)" }}
+    >
       <Table>
-        <TableCaption className="py-4 text-slate-400">
+        <TableCaption className="py-4" style={{ color: "var(--ink-soft)" }}>
           Live view of every job you've applied to — statuses and interviews
           update instantly.
         </TableCaption>
 
         <TableHeader>
           <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Job Role</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Interview</TableHead>
+            <TableHead
+              className="font-mono-ui uppercase tracking-wider text-xs"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Date
+            </TableHead>
+            <TableHead
+              className="font-mono-ui uppercase tracking-wider text-xs"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Job Role
+            </TableHead>
+            <TableHead
+              className="font-mono-ui uppercase tracking-wider text-xs"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Company
+            </TableHead>
+            <TableHead
+              className="font-mono-ui uppercase tracking-wider text-xs"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Status
+            </TableHead>
+            <TableHead
+              className="font-mono-ui uppercase tracking-wider text-xs"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Interview
+            </TableHead>
           </TableRow>
         </TableHeader>
 
@@ -52,8 +80,14 @@ const AppliedJobTable = () => {
             <TableRow>
               <TableCell colSpan={5} className="text-center py-12">
                 <div className="flex flex-col items-center">
-                  <Clock className="w-10 h-10 text-slate-200 mb-2" />
-                  <p className="text-sm font-semibold text-slate-400">
+                  <Clock
+                    className="w-10 h-10 mb-2"
+                    style={{ color: "var(--line)" }}
+                  />
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     You haven't applied to any jobs yet.
                   </p>
                 </div>
@@ -64,13 +98,22 @@ const AppliedJobTable = () => {
               const ModeIcon = modeIcon[app?.interview?.mode] || CalendarClock;
               return (
                 <TableRow key={app._id}>
-                  <TableCell className="text-slate-500 font-medium">
+                  <TableCell
+                    className="font-medium"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {app?.createdAt?.split("T")[0]}
                   </TableCell>
-                  <TableCell className="font-bold text-slate-800">
+                  <TableCell
+                    className="font-bold"
+                    style={{ color: "var(--ink)" }}
+                  >
                     {app?.job?.title}
                   </TableCell>
-                  <TableCell className="text-slate-600 font-medium">
+                  <TableCell
+                    className="font-medium"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
                     {app?.job?.company?.name}
                   </TableCell>
                   <TableCell>
@@ -98,14 +141,20 @@ const AppliedJobTable = () => {
                   <TableCell>
                     {app?.interview?.date ? (
                       <div className="flex items-start gap-2">
-                        <ModeIcon className="w-4 h-4 text-indigo-500 mt-0.5 shrink-0" />
+                        <ModeIcon
+                          className="w-4 h-4 mt-0.5 shrink-0"
+                          style={{ color: "var(--teal)" }}
+                        />
                         <div className="text-xs">
-                          <p className="font-bold text-slate-700">
+                          <p
+                            className="font-bold"
+                            style={{ color: "var(--ink)" }}
+                          >
                             {app.interview.date?.split("T")[0]} ·{" "}
                             {app.interview.time}
                           </p>
                           {app.interview.mode === "offline" ? (
-                            <p className="text-slate-500">
+                            <p style={{ color: "var(--ink-soft)" }}>
                               {app.interview.location}
                             </p>
                           ) : app.interview.location ? (
@@ -113,20 +162,29 @@ const AppliedJobTable = () => {
                               href={app.interview.location}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:underline"
+                              className="hover:underline"
+                              style={{ color: "var(--teal)" }}
                             >
                               Join link
                             </a>
                           ) : null}
                           {app.interview.notes && (
-                            <p className="text-slate-400 italic mt-0.5">
+                            <p
+                              className="italic mt-0.5"
+                              style={{ color: "var(--ink-soft)" }}
+                            >
                               {app.interview.notes}
                             </p>
                           )}
                         </div>
                       </div>
                     ) : (
-                      <span className="text-slate-300 text-xs">—</span>
+                      <span
+                        className="text-xs"
+                        style={{ color: "var(--line)" }}
+                      >
+                        —
+                      </span>
                     )}
                   </TableCell>
                 </TableRow>

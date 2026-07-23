@@ -77,9 +77,15 @@ const FilterCard = () => {
   const hasActiveFilters = Object.values(jobFilters).some((v) => v);
 
   return (
-    <div className="w-full bg-white rounded-3xl border border-slate-100 p-6 sticky top-24 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+    <div
+      className="font-body w-full bg-white rounded-3xl border p-6 sticky top-24 shadow-[0_8px_30px_rgb(0,0,0,0.02)]"
+      style={{ borderColor: "var(--line)" }}
+    >
       <div className="flex items-center justify-between mb-6 pb-2">
-        <h1 className="font-extrabold text-lg text-slate-800 tracking-tight">
+        <h1
+          className="font-display font-semibold text-lg tracking-tight"
+          style={{ color: "var(--ink)" }}
+        >
           Filter Jobs
         </h1>
 
@@ -88,7 +94,14 @@ const FilterCard = () => {
             size="sm"
             variant="ghost"
             onClick={() => dispatch(clearJobFilters())}
-            className="text-xs font-bold text-slate-400 hover:text-rose-600 hover:bg-rose-50/50 rounded-xl px-3 h-8 transition-all"
+            className="font-mono-ui text-xs font-bold rounded-xl px-3 h-8 transition-all hover:bg-transparent"
+            style={{ color: "var(--ink-soft)" }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.color = "var(--marigold-deep)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.color = "var(--ink-soft)")
+            }
           >
             Clear All
           </Button>
@@ -99,13 +112,17 @@ const FilterCard = () => {
         {sections.map((section, index) => (
           <div key={section.key} className="group">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="font-bold text-xs uppercase tracking-wider text-slate-400">
+              <h2
+                className="font-mono-ui font-bold text-xs uppercase tracking-wider"
+                style={{ color: "var(--ink-soft)" }}
+              >
                 {section.title}
               </h2>
               {section.value && (
                 <button
                   onClick={() => section.onChange("")}
-                  className="text-[10px] font-bold text-blue-500 hover:text-blue-700"
+                  className="font-mono-ui text-[10px] font-bold"
+                  style={{ color: "var(--teal)" }}
                 >
                   Clear
                 </button>
@@ -124,16 +141,22 @@ const FilterCard = () => {
                 return (
                   <div
                     key={itemId}
-                    className={`flex items-center space-x-3 px-2 py-1.5 rounded-xl transition-all duration-200 ${
+                    className="flex items-center space-x-3 px-2 py-1.5 rounded-xl transition-all duration-200"
+                    style={
                       isChecked
-                        ? "bg-blue-50/60 text-blue-700 font-semibold"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                    }`}
+                        ? {
+                            background: "rgba(255,178,56,0.14)",
+                            color: "var(--marigold-deep)",
+                            fontWeight: 600,
+                          }
+                        : { color: "var(--ink-soft)" }
+                    }
                   >
                     <RadioGroupItem
                       id={itemId}
                       value={item}
-                      className="border-slate-300 text-blue-600 focus:ring-blue-500/30 h-4 w-4"
+                      className="h-4 w-4"
+                      style={{ borderColor: "var(--line)" }}
                     />
                     <Label
                       htmlFor={itemId}
@@ -147,7 +170,7 @@ const FilterCard = () => {
             </RadioGroup>
 
             {index < sections.length - 1 && (
-              <hr className="mt-5 border-slate-100" />
+              <hr className="mt-5" style={{ borderColor: "var(--line)" }} />
             )}
           </div>
         ))}
