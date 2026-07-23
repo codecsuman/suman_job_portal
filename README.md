@@ -2,13 +2,14 @@
 
 <br/>
 
-██╗ ██████╗ ██████╗ ██████╗ ██████╗ ██████╗ ████████╗ █████╗ ██╗
-██║██╔═══██╗██╔══██╗ ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║
-██║██║ ██║██████╔╝ ██████╔╝██║ ██║██████╔╝ ██║ ███████║██║
-██║██║ ██║██╔══██╗ ██╔═══╝ ██║ ██║██╔══██╗ ██║ ██╔══██║██║
-██╗██║╚██████╔╝██████╔╝ ██║ ╚██████╔╝██║ ██║ ██║ ██║ ██║███████╗
-╚═╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝ ╚═╝ ╚═╝ ╚═╝ ╚═╝╚══════╝
-
+```
+ ██╗ ██████╗ ██████╗     ██████╗  ██████╗ ██████╗ ████████╗ █████╗ ██╗
+ ██║██╔═══██╗██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██║
+ ██║██║   ██║██████╔╝    ██████╔╝██║   ██║██████╔╝   ██║   ███████║██║
+ ██║██║   ██║██╔══██╗    ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══██║██║
+██╗██║╚██████╔╝██████╔╝    ██║     ╚██████╔╝██║  ██║   ██║   ██║  ██║███████╗
+╚═╝╚═╝ ╚═════╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
+```
 
 ### *Where talent meets opportunity — built on the MERN Stack*
 
@@ -110,45 +111,47 @@
 
 ## 🛠️ Tech Stack
 
+```
 ┌─────────────────────────────────────────────────────────────┐
-│ FULL STACK OVERVIEW │
+│                      FULL STACK OVERVIEW                    │
 ├─────────────────┬───────────────────────────────────────────┤
-│ Frontend │ React.js · Vite · Tailwind CSS · Axios │
-│ Backend │ Node.js · Express.js │
-│ Database │ MongoDB Atlas · Mongoose ODM │
-│ Auth │ JSON Web Tokens (JWT) · bcrypt.js │
-│ File Upload │ Multer · Cloudinary │
-│ Deployment │ Vercel (FE) · Render (BE) │
-│ Version Ctrl │ Git & GitHub │
+│  Frontend       │  React.js · Vite · Tailwind CSS · Axios   │
+│  Backend        │  Node.js · Express.js                     │
+│  Database       │  MongoDB Atlas · Mongoose ODM             │
+│  Auth           │  JSON Web Tokens (JWT) · bcrypt.js        │
+│  File Upload    │  Multer · Cloudinary                      │
+│  Deployment     │  Vercel (FE) · Render (BE)                │
+│  Version Ctrl   │  Git & GitHub                             │
 └─────────────────┴───────────────────────────────────────────┘
-
+```
 
 ---
 
 ## 📁 Project Structure
 
+```
 suman_job_portal/
 │
 ├── 📂 frontend/
-│ ├── src/
-│ │ ├── components/ # Reusable UI components
-│ │ ├── pages/ # Route-level page components
-│ │ ├── hooks/ # Custom React hooks
-│ │ ├── store/ # Redux state management
-│ │ └── utils/ # Helper utilities
-│ ├── public/
-│ └── package.json
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Route-level page components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── store/          # Redux state management
+│   │   └── utils/          # Helper utilities
+│   ├── public/
+│   └── package.json
 │
 ├── 📂 backend/
-│ ├── controllers/ # Route handler logic
-│ ├── middleware/ # Auth & error middleware
-│ ├── models/ # Mongoose data models
-│ ├── routes/ # Express API routes
-│ ├── utils/ # Utility functions
-│ └── package.json
+│   ├── controllers/        # Route handler logic
+│   ├── middleware/         # Auth & error middleware
+│   ├── models/              # Mongoose data models
+│   ├── routes/              # Express API routes
+│   ├── utils/                # Utility functions
+│   └── package.json
 │
 └── README.md
-
+```
 
 ---
 
